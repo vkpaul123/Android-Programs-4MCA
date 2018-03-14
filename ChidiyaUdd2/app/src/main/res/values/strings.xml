@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ChidiyaUdd2</string>
+
+    <string name="bird1">Sparrow</string>
+    <string name="bird2">Crow</string>
+    <string name="bird3">Parrot</string>
+    <string name="bird4">Woodpecker</string>
+    <string name="bird5">Duck</string>
+</resources>

@@ -1,0 +1,333 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.myapplicationzerozeroone; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.media.AudioManager; 
+</span><span class="s0">import </span><span class="s1">android.media.MediaMetadataRetriever; 
+</span><span class="s0">import </span><span class="s1">android.media.MediaPlayer; 
+</span><span class="s0">import </span><span class="s1">android.os.Handler; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.ContextMenu; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.ImageView; 
+</span><span class="s0">import </span><span class="s1">android.widget.MediaController; 
+</span><span class="s0">import </span><span class="s1">android.widget.SeekBar; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+</span><span class="s0">import </span><span class="s1">android.view.Menu; 
+</span><span class="s0">import </span><span class="s1">android.view.MenuItem; 
+ 
+</span><span class="s0">import </span><span class="s1">java.math.BigDecimal; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s0">boolean </span><span class="s1">playing = </span><span class="s0">false</span><span class="s1">; 
+    MediaPlayer mp; 
+    MediaMetadataRetriever mmr; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        Button play = (Button) findViewById(R.id.play); 
+        Button pause = (Button) findViewById(R.id.pause); 
+        Button stop = (Button) findViewById(R.id.stop); 
+ 
+        ImageView albumArt = (ImageView) findViewById(R.id.imageView); 
+ 
+        registerForContextMenu(albumArt); 
+ 
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar); 
+        </span><span class="s0">final </span><span class="s1">AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE); 
+ 
+        seekBar.setOnSeekBarChangeListener(</span><span class="s0">new </span><span class="s1">SeekBar.OnSeekBarChangeListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onProgressChanged(SeekBar seekBar, </span><span class="s0">int </span><span class="s1">progress, </span><span class="s0">boolean </span><span class="s1">fromUser) { 
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress / </span><span class="s2">3</span><span class="s1">, </span><span class="s2">0</span><span class="s1">); 
+            } 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onStartTrackingTouch(SeekBar seekBar) { 
+ 
+            } 
+ 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onStopTrackingTouch(SeekBar seekBar) { 
+ 
+            } 
+        }); 
+ 
+        mp = MediaPlayer.create(MainActivity.</span><span class="s0">this</span><span class="s1">, R.raw.song); 
+ 
+        play.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s0">if </span><span class="s1">(!playing) { 
+                    mp.start(); 
+                    </span><span class="s0">final </span><span class="s1">Handler handler = </span><span class="s0">new </span><span class="s1">Handler(); 
+                    Runnable runnable = </span><span class="s0">new </span><span class="s1">Runnable() { 
+                        @Override 
+                        </span><span class="s0">public void </span><span class="s1">run() { 
+                            </span><span class="s0">while </span><span class="s1">(mp.isPlaying()) { 
+                                </span><span class="s0">try </span><span class="s1">{ 
+                                    Thread.sleep(</span><span class="s2">1000</span><span class="s1">); 
+                                } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                                    e.printStackTrace(); 
+                                } 
+                                handler.post(</span><span class="s0">new </span><span class="s1">Runnable() { 
+                                    TextView timer = (TextView) findViewById(R.id.timer); 
+                                    TextView timer2 = (TextView) findViewById(R.id.timer2); 
+ 
+                                    @Override 
+                                    </span><span class="s0">public void </span><span class="s1">run() { 
+                                        </span><span class="s0">int</span><span class="s1">[] ints = splitToComponentTimes(</span><span class="s0">new </span><span class="s1">BigDecimal(mp.getCurrentPosition() / </span><span class="s2">1000</span><span class="s1">)); 
+                                        </span><span class="s0">int</span><span class="s1">[] ints2 = splitToComponentTimes(</span><span class="s0">new </span><span class="s1">BigDecimal((mp.getDuration() - mp.getCurrentPosition()) / </span><span class="s2">1000</span><span class="s1">)); 
+ 
+                                        timer.setText(</span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">0</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">1</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">2</span><span class="s1">]).toString()); 
+                                        timer2.setText(</span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">0</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">1</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">2</span><span class="s1">]).toString()); 
+ 
+                                    } 
+ 
+                                    </span><span class="s0">public int</span><span class="s1">[] splitToComponentTimes(BigDecimal biggy) { 
+                                        </span><span class="s0">long </span><span class="s1">longVal = biggy.longValue(); 
+                                        </span><span class="s0">int </span><span class="s1">hours = (</span><span class="s0">int</span><span class="s1">) longVal / </span><span class="s2">3600</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">remainder = (</span><span class="s0">int</span><span class="s1">) longVal - hours * </span><span class="s2">3600</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">mins = remainder / </span><span class="s2">60</span><span class="s1">; 
+                                        remainder = remainder - mins * </span><span class="s2">60</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">secs = remainder; 
+ 
+                                        </span><span class="s0">int</span><span class="s1">[] ints = {hours, mins, secs}; 
+                                        </span><span class="s0">return </span><span class="s1">ints; 
+                                    } 
+                                }); 
+                            } 
+                        } 
+                    }; 
+                    </span><span class="s0">new </span><span class="s1">Thread(runnable).start(); 
+                } 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Play...&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                playing = </span><span class="s0">true</span><span class="s1">; 
+            } 
+        }); 
+ 
+        pause.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s0">if </span><span class="s1">(playing) 
+                    mp.pause(); 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Pause.&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                playing = </span><span class="s0">false</span><span class="s1">; 
+            } 
+        }); 
+ 
+        stop.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s0">try </span><span class="s1">{ 
+                    mp.stop(); 
+                    mp = MediaPlayer.create(MainActivity.</span><span class="s0">this</span><span class="s1">, R.raw.song); 
+                } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                    System.err.println(e); 
+                } 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Stop!&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                playing = </span><span class="s0">false</span><span class="s1">; 
+            } 
+        }); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu(Menu menu) { 
+        </span><span class="s4">// Inflate the menu; this adds items to the action bar if it is present.</span><span class="s1"> 
+        getMenuInflater().inflate(R.menu.simplemenu, menu);</span><span class="s4">//Menu Resource, Menu</span><span class="s1"> 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(MenuItem item) { 
+        </span><span class="s0">switch </span><span class="s1">(item.getItemId()) { 
+            </span><span class="s0">case </span><span class="s1">R.id.menuPlay: 
+                </span><span class="s0">if </span><span class="s1">(!playing) { 
+                    mp.start(); 
+                    </span><span class="s0">final </span><span class="s1">Handler handler = </span><span class="s0">new </span><span class="s1">Handler(); 
+                    Runnable runnable = </span><span class="s0">new </span><span class="s1">Runnable() { 
+                        @Override 
+                        </span><span class="s0">public void </span><span class="s1">run() { 
+                            </span><span class="s0">while </span><span class="s1">(mp.isPlaying()) { 
+                                </span><span class="s0">try </span><span class="s1">{ 
+                                    Thread.sleep(</span><span class="s2">1000</span><span class="s1">); 
+                                } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                                    e.printStackTrace(); 
+                                } 
+                                handler.post(</span><span class="s0">new </span><span class="s1">Runnable() { 
+                                    TextView timer = (TextView) findViewById(R.id.timer); 
+                                    TextView timer2 = (TextView) findViewById(R.id.timer2); 
+ 
+                                    @Override 
+                                    </span><span class="s0">public void </span><span class="s1">run() { 
+                                        </span><span class="s0">int</span><span class="s1">[] ints = splitToComponentTimes(</span><span class="s0">new </span><span class="s1">BigDecimal(mp.getCurrentPosition() / </span><span class="s2">1000</span><span class="s1">)); 
+                                        </span><span class="s0">int</span><span class="s1">[] ints2 = splitToComponentTimes(</span><span class="s0">new </span><span class="s1">BigDecimal((mp.getDuration() - mp.getCurrentPosition()) / </span><span class="s2">1000</span><span class="s1">)); 
+ 
+                                        timer.setText(</span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">0</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">1</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">2</span><span class="s1">]).toString()); 
+                                        timer2.setText(</span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">0</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">1</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">2</span><span class="s1">]).toString()); 
+ 
+                                    } 
+ 
+                                    </span><span class="s0">public int</span><span class="s1">[] splitToComponentTimes(BigDecimal biggy) { 
+                                        </span><span class="s0">long </span><span class="s1">longVal = biggy.longValue(); 
+                                        </span><span class="s0">int </span><span class="s1">hours = (</span><span class="s0">int</span><span class="s1">) longVal / </span><span class="s2">3600</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">remainder = (</span><span class="s0">int</span><span class="s1">) longVal - hours * </span><span class="s2">3600</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">mins = remainder / </span><span class="s2">60</span><span class="s1">; 
+                                        remainder = remainder - mins * </span><span class="s2">60</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">secs = remainder; 
+ 
+                                        </span><span class="s0">int</span><span class="s1">[] ints = {hours, mins, secs}; 
+                                        </span><span class="s0">return </span><span class="s1">ints; 
+                                    } 
+                                }); 
+                            } 
+                        } 
+                    }; 
+                    </span><span class="s0">new </span><span class="s1">Thread(runnable).start(); 
+                } 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Play...&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                playing = </span><span class="s0">true</span><span class="s1">; 
+                </span><span class="s0">return true</span><span class="s1">; 
+ 
+            </span><span class="s0">case </span><span class="s1">R.id.menuPause: 
+                </span><span class="s0">if </span><span class="s1">(playing) 
+                    mp.pause(); 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Pause.&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                playing = </span><span class="s0">false</span><span class="s1">; 
+ 
+                </span><span class="s0">return true</span><span class="s1">; 
+ 
+            </span><span class="s0">case </span><span class="s1">R.id.menuStop: 
+                </span><span class="s0">try </span><span class="s1">{ 
+                    mp.stop(); 
+                    mp = MediaPlayer.create(MainActivity.</span><span class="s0">this</span><span class="s1">, R.raw.song); 
+                } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                    System.err.println(e); 
+                } 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Stop!&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                playing = </span><span class="s0">false</span><span class="s1">; 
+ 
+                </span><span class="s0">return true</span><span class="s1">; 
+ 
+            </span><span class="s0">case </span><span class="s1">R.id.menuStop2: 
+                </span><span class="s0">try </span><span class="s1">{ 
+                    mp.stop(); 
+                    mp = MediaPlayer.create(MainActivity.</span><span class="s0">this</span><span class="s1">, R.raw.song); 
+                } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                    System.err.println(e); 
+                } 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Stop!&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                playing = </span><span class="s0">false</span><span class="s1">; 
+ 
+                </span><span class="s0">return true</span><span class="s1">; 
+        } 
+        </span><span class="s0">return false</span><span class="s1">; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) { 
+        getMenuInflater().inflate(R.menu.contextmenu, menu);</span><span class="s4">//Menu Resource, Menu</span><span class="s1"> 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onContextItemSelected(MenuItem item) { 
+        </span><span class="s0">switch </span><span class="s1">(item.getItemId()) { 
+            </span><span class="s0">case </span><span class="s1">R.id.cmenuPlay: 
+                </span><span class="s0">if </span><span class="s1">(!playing) { 
+                    mp.start(); 
+                    </span><span class="s0">final </span><span class="s1">Handler handler = </span><span class="s0">new </span><span class="s1">Handler(); 
+                    Runnable runnable = </span><span class="s0">new </span><span class="s1">Runnable() { 
+                        @Override 
+                        </span><span class="s0">public void </span><span class="s1">run() { 
+                            </span><span class="s0">while </span><span class="s1">(mp.isPlaying()) { 
+                                </span><span class="s0">try </span><span class="s1">{ 
+                                    Thread.sleep(</span><span class="s2">1000</span><span class="s1">); 
+                                } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                                    e.printStackTrace(); 
+                                } 
+                                handler.post(</span><span class="s0">new </span><span class="s1">Runnable() { 
+                                    TextView timer = (TextView) findViewById(R.id.timer); 
+                                    TextView timer2 = (TextView) findViewById(R.id.timer2); 
+ 
+                                    @Override 
+                                    </span><span class="s0">public void </span><span class="s1">run() { 
+                                        </span><span class="s0">int</span><span class="s1">[] ints = splitToComponentTimes(</span><span class="s0">new </span><span class="s1">BigDecimal(mp.getCurrentPosition() / </span><span class="s2">1000</span><span class="s1">)); 
+                                        </span><span class="s0">int</span><span class="s1">[] ints2 = splitToComponentTimes(</span><span class="s0">new </span><span class="s1">BigDecimal((mp.getDuration() - mp.getCurrentPosition()) / </span><span class="s2">1000</span><span class="s1">)); 
+ 
+                                        timer.setText(</span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">0</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">1</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints[</span><span class="s2">2</span><span class="s1">]).toString()); 
+                                        timer2.setText(</span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">0</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">1</span><span class="s1">]).toString() + </span><span class="s3">&quot;:&quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Integer(ints2[</span><span class="s2">2</span><span class="s1">]).toString()); 
+ 
+                                    } 
+ 
+                                    </span><span class="s0">public int</span><span class="s1">[] splitToComponentTimes(BigDecimal biggy) { 
+                                        </span><span class="s0">long </span><span class="s1">longVal = biggy.longValue(); 
+                                        </span><span class="s0">int </span><span class="s1">hours = (</span><span class="s0">int</span><span class="s1">) longVal / </span><span class="s2">3600</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">remainder = (</span><span class="s0">int</span><span class="s1">) longVal - hours * </span><span class="s2">3600</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">mins = remainder / </span><span class="s2">60</span><span class="s1">; 
+                                        remainder = remainder - mins * </span><span class="s2">60</span><span class="s1">; 
+                                        </span><span class="s0">int </span><span class="s1">secs = remainder; 
+ 
+                                        </span><span class="s0">int</span><span class="s1">[] ints = {hours, mins, secs}; 
+                                        </span><span class="s0">return </span><span class="s1">ints; 
+                                    } 
+                                }); 
+                            } 
+                        } 
+                    }; 
+                    </span><span class="s0">new </span><span class="s1">Thread(runnable).start(); 
+                } 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Play...&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                playing = </span><span class="s0">true</span><span class="s1">; 
+                </span><span class="s0">return true</span><span class="s1">; 
+ 
+            </span><span class="s0">case </span><span class="s1">R.id.cmenuPause: 
+                </span><span class="s0">if </span><span class="s1">(playing) 
+                    mp.pause(); 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Pause.&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                playing = </span><span class="s0">false</span><span class="s1">; 
+ 
+                </span><span class="s0">return true</span><span class="s1">; 
+ 
+            </span><span class="s0">case </span><span class="s1">R.id.cmenuStop: 
+                </span><span class="s0">try </span><span class="s1">{ 
+                    mp.stop(); 
+                    mp = MediaPlayer.create(MainActivity.</span><span class="s0">this</span><span class="s1">, R.raw.song); 
+                } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                    System.err.println(e); 
+                } 
+                Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s3">&quot;Stop!&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                playing = </span><span class="s0">false</span><span class="s1">; 
+ 
+                </span><span class="s0">return true</span><span class="s1">; 
+        } 
+        </span><span class="s0">return false</span><span class="s1">; 
+    } 
+}</span></pre>
+</body>
+</html>

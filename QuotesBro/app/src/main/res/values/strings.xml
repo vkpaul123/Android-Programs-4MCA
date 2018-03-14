@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">QuotesBro</string>
+
+    <string name="quote1">Join The Army. Visit exotic places, meet strange people, then kill them.</string>
+    <string name="quote2">When you\'re right, no one remembers. When you\'re wrong, no one forgets.</string>
+    <string name="quote3">Cheer up, the worst is yet to come.</string>
+    <string name="quote4">Always remember: you\'re unique, just like everyone else.</string>
+    <string name="quote5">Half of the people in the world are below average.</string>
+
+    <string name="url1">http://2.bp.blogspot.com/-x1kTluVwm7w/UUMn89GYdMI/AAAAAAAAUjI/rYf1pdikUws/s1600/Nature+Scenery+Wallpapers+1.jpg</string>
+    <string name="url2">http://3.bp.blogspot.com/-I45mQty0pzY/UXLL99G2_dI/AAAAAAAAVz4/5Pw2_aqi6qk/s1600/Scenery+Wallpapers+Free+4.jpg</string>
+    <string name="url3">http://2.bp.blogspot.com/-qKDLV1wxrMA/UMIAfeT19LI/AAAAAAAAOsE/VhSoAvOwBtU/s1600/Beautiful+Autumn+Scenery+Wallpapers+05.jpg</string>
+    <string name="url4">http://4.bp.blogspot.com/-RAqOLJjpZPg/UMH_00P-KcI/AAAAAAAAOrk/mZTNtLJIYfE/s1600/Beautiful+Autumn+Scenery+Wallpapers+01.jpg</string>
+    <string name="url5">http://3.bp.blogspot.com/-0id-9ZBXqkE/UbWMrNckbuI/AAAAAAAAWPA/vgyqAqxsmPI/s1600/Free+Scenery+Wallpapers+%25288%2529.jpg</string>
+</resources>

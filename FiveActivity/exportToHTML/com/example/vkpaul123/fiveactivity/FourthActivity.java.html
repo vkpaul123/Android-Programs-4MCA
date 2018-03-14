@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>FourthActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+FourthActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.fiveactivity; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+ 
+</span><span class="s0">public class </span><span class="s1">FourthActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s0">private </span><span class="s1">Button button1; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_fourth); 
+ 
+        addActionListener(); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">addActionListener() { 
+        button1 = (Button) findViewById(R.id.button5); 
+ 
+        button1.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext(), FifthActivity.</span><span class="s0">class</span><span class="s1">); 
+ 
+                startActivity(i); 
+            } 
+        }); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>CalcMain.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+CalcMain.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.vikramcalculator; 
+ 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.CompoundButton; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.Switch; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">public class </span><span class="s1">CalcMain </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_calc_main); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">addButtonClicked(View view) { 
+        EditText t1 = (EditText) findViewById(R.id.editText3); 
+        EditText t2 = (EditText) findViewById(R.id.editText4); 
+ 
+        TextView tvAdd = (TextView) findViewById(R.id.textView10); 
+ 
+        </span><span class="s0">try </span><span class="s1">{ 
+            </span><span class="s0">double </span><span class="s1">num1 = Double.parseDouble(t1.getText().toString()); 
+            </span><span class="s0">double </span><span class="s1">num2 = Double.parseDouble(t2.getText().toString()); 
+ 
+            </span><span class="s0">double </span><span class="s1">sum = num1 + num2; 
+ 
+            tvAdd.setText(Double.toString(sum)); 
+        }</span><span class="s0">catch </span><span class="s1">(Exception e) { 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Exception Occoured! &quot; </span><span class="s1">+ e, Toast.LENGTH_LONG).show(); 
+        }</span><span class="s0">finally </span><span class="s1">{ 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Answer Calculated.&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">subButtonClicked(View view) { 
+        EditText t1 = (EditText) findViewById(R.id.editText3); 
+        EditText t2 = (EditText) findViewById(R.id.editText4); 
+ 
+        TextView tvSub = (TextView) findViewById(R.id.textView11); 
+ 
+        </span><span class="s0">try </span><span class="s1">{ 
+            </span><span class="s0">double </span><span class="s1">num1 = Double.parseDouble(t1.getText().toString()); 
+            </span><span class="s0">double </span><span class="s1">num2 = Double.parseDouble(t2.getText().toString()); 
+ 
+            </span><span class="s0">double </span><span class="s1">sum = num1 - num2; 
+ 
+            tvSub.setText(Double.toString(sum)); 
+        }</span><span class="s0">catch </span><span class="s1">(Exception e) { 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Exception Occoured! &quot; </span><span class="s1">+ e, Toast.LENGTH_LONG).show(); 
+        }</span><span class="s0">finally </span><span class="s1">{ 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Answer Calculated.&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">multButtonClicked(View view) { 
+        EditText t1 = (EditText) findViewById(R.id.editText3); 
+        EditText t2 = (EditText) findViewById(R.id.editText4); 
+ 
+        TextView tvMult = (TextView) findViewById(R.id.textView12); 
+ 
+ 
+        </span><span class="s0">try </span><span class="s1">{ 
+            </span><span class="s0">double </span><span class="s1">num1 = Double.parseDouble(t1.getText().toString()); 
+            </span><span class="s0">double </span><span class="s1">num2 = Double.parseDouble(t2.getText().toString()); 
+ 
+            </span><span class="s0">double </span><span class="s1">sum = num1 * num2; 
+ 
+            tvMult.setText(Double.toString(sum)); 
+        }</span><span class="s0">catch </span><span class="s1">(Exception e) { 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Exception Occoured! &quot; </span><span class="s1">+ e, Toast.LENGTH_LONG).show(); 
+        }</span><span class="s0">finally </span><span class="s1">{ 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Answer Calculated.&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">divButtonClicked(View view) { 
+        EditText t1 = (EditText) findViewById(R.id.editText3); 
+        EditText t2 = (EditText) findViewById(R.id.editText4); 
+ 
+        TextView tvDiv = (TextView) findViewById(R.id.textView13); 
+ 
+        </span><span class="s0">try </span><span class="s1">{ 
+            </span><span class="s0">double </span><span class="s1">num1 = Double.parseDouble(t1.getText().toString()); 
+            </span><span class="s0">double </span><span class="s1">num2 = Double.parseDouble(t2.getText().toString()); 
+ 
+            </span><span class="s0">double </span><span class="s1">sum = num1 / num2; 
+ 
+            tvDiv.setText(Double.toString(sum)); 
+        }</span><span class="s0">catch </span><span class="s1">(Exception e) { 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Exception Occoured! &quot; </span><span class="s1">+ e, Toast.LENGTH_LONG).show(); 
+        }</span><span class="s0">finally </span><span class="s1">{ 
+            Toast.makeText(CalcMain.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Answer Calculated.&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>

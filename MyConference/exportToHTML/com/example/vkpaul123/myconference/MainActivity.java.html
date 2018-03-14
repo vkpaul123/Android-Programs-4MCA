@@ -1,0 +1,165 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.myconference; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.hardware.camera2.TotalCaptureResult; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.ArrayAdapter; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.CompoundButton; 
+</span><span class="s0">import </span><span class="s1">android.widget.CompoundButton.OnCheckedChangeListener; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.RadioButton; 
+</span><span class="s0">import </span><span class="s1">android.widget.RadioGroup; 
+</span><span class="s0">import </span><span class="s1">android.widget.Spinner; 
+</span><span class="s0">import </span><span class="s1">android.widget.Switch; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.ArrayList; 
+</span><span class="s0">import </span><span class="s1">java.util.List; 
+</span><span class="s0">import </span><span class="s1">java.util.regex.Pattern; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s0">private </span><span class="s1">Spinner spinner1; 
+    </span><span class="s0">private </span><span class="s1">EditText name, phone, email, pass, address, dob, time; 
+    </span><span class="s0">private </span><span class="s1">Switch member; 
+    </span><span class="s0">private </span><span class="s1">RadioGroup radioGroup; 
+    </span><span class="s0">private </span><span class="s1">RadioButton radioButton; 
+    </span><span class="s0">private </span><span class="s1">Button register; 
+ 
+    </span><span class="s0">private </span><span class="s1">String toastText = </span><span class="s2">&quot;&quot;</span><span class="s1">; 
+ 
+    </span><span class="s0">private </span><span class="s1">String[] spinItems = {</span><span class="s2">&quot;(Select Age Group)&quot;</span><span class="s1">, </span><span class="s2">&quot;15 and Below&quot;</span><span class="s1">, </span><span class="s2">&quot;16-20&quot;</span><span class="s1">, </span><span class="s2">&quot;21-30&quot;</span><span class="s1">, </span><span class="s2">&quot;31-50&quot;</span><span class="s1">, </span><span class="s2">&quot;51-70&quot;</span><span class="s1">, </span><span class="s2">&quot;71 and Above&quot;</span><span class="s1">}; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        addItemOnSpinner(); 
+        addListenerOnButton(); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">addListenerOnButton() { 
+        radioGroup = (RadioGroup) findViewById(R.id.genderGroup); 
+ 
+        register = (Button) findViewById(R.id.button4); 
+ 
+        register.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                String nameRegEx = </span><span class="s2">&quot;^[</span><span class="s0">\\</span><span class="s2">p{L} .'-]+$&quot;</span><span class="s1">, phoneRegEx= </span><span class="s2">&quot;</span><span class="s0">\\</span><span class="s2">d+&quot;</span><span class="s1">, emailRegEx=</span><span class="s2">&quot;^[A-Z0-9._%+-]+@[A-Z0-9.-]+</span><span class="s0">\\</span><span class="s2">.[A-Z]{2,6}$&quot;</span><span class="s1">, dateRegEx=</span><span class="s2">&quot;^</span><span class="s0">\\</span><span class="s2">d{2}/</span><span class="s0">\\</span><span class="s2">d{2}/</span><span class="s0">\\</span><span class="s2">d{4}$&quot;</span><span class="s1">, timeRegEx=</span><span class="s2">&quot;^</span><span class="s0">\\</span><span class="s2">d{2}:</span><span class="s0">\\</span><span class="s2">d{2}$&quot; </span><span class="s1">, passRegEx=</span><span class="s2">&quot;^((?=.*</span><span class="s0">\\\\</span><span class="s2">d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})$&quot;</span><span class="s1">; 
+                Pattern namePattern = Pattern.compile(nameRegEx, Pattern.CASE_INSENSITIVE), phonePattern = Pattern.compile(phoneRegEx, Pattern.CASE_INSENSITIVE), emailPattern = Pattern.compile(emailRegEx, Pattern.CASE_INSENSITIVE), datePattern = Pattern.compile(dateRegEx, Pattern.UNICODE_CASE), timePattern = Pattern.compile(timeRegEx, Pattern.CASE_INSENSITIVE), passPattern = Pattern.compile(passRegEx, Pattern.CASE_INSENSITIVE); 
+ 
+                </span><span class="s0">try </span><span class="s1">{ 
+                    name = (EditText) findViewById(R.id.editText4); 
+                    phone = (EditText) findViewById(R.id.editText5); 
+                    email = (EditText) findViewById(R.id.editText6); 
+                    pass = (EditText) findViewById(R.id.editText2); 
+                    address = (EditText) findViewById(R.id.editText7); 
+                    dob = (EditText) findViewById(R.id.editText8); 
+                    time = (EditText) findViewById(R.id.editText9); 
+                    spinner1 = (Spinner) findViewById(R.id.ageGroup); 
+                    </span><span class="s0">int </span><span class="s1">selectedId = radioGroup.getCheckedRadioButtonId(); 
+                    radioButton = (RadioButton) findViewById(selectedId); 
+                    member = (Switch) findViewById(R.id.memberCheck); 
+                    pass = (EditText) findViewById(R.id.editText2); 
+ 
+                    </span><span class="s0">if</span><span class="s1">(name.getText().length() &lt; </span><span class="s3">3</span><span class="s1">) 
+                        name.setError(</span><span class="s2">&quot;Name is Too Short.&quot;</span><span class="s1">); 
+                    </span><span class="s0">else if</span><span class="s1">(! namePattern.matcher(name.getText()).matches()) 
+                        name.setError(</span><span class="s2">&quot;Invalid Name&quot;</span><span class="s1">); 
+ 
+                    </span><span class="s0">else if</span><span class="s1">(phone.getText().length() &lt; </span><span class="s3">6</span><span class="s1">) 
+                        phone.setError(</span><span class="s2">&quot;Phone Number is Too Short&quot;</span><span class="s1">); 
+                    </span><span class="s0">else if</span><span class="s1">(! phonePattern.matcher(phone.getText()).matches()) 
+                        phone.setError(</span><span class="s2">&quot;Invalid Phone Number&quot;</span><span class="s1">); 
+ 
+                    </span><span class="s0">else if</span><span class="s1">(email.getText().length() &lt; </span><span class="s3">5</span><span class="s1">) 
+                        email.setError(</span><span class="s2">&quot;Email is too short.&quot;</span><span class="s1">); 
+                    </span><span class="s0">else if</span><span class="s1">(! emailPattern.matcher(email.getText()).matches()) 
+                        email.setError(</span><span class="s2">&quot;Invalid Email&quot;</span><span class="s1">); 
+ 
+                    </span><span class="s0">else if</span><span class="s1">(pass.getText().length() &lt; </span><span class="s3">3</span><span class="s1">) 
+                        pass.setError(</span><span class="s2">&quot;Password is too Short!&quot;</span><span class="s1">); 
+ 
+</span><span class="s4">//                    else if(! passPattern.matcher(pass.getText()).matches())</span><span class="s1"> 
+</span><span class="s4">//                        pass.setError(&quot;Please add a Symbol, Capital Letter, Small Letter, and a Number.&quot;);</span><span class="s1"> 
+ 
+                    </span><span class="s0">else if</span><span class="s1">(address.getText().length() &lt; </span><span class="s3">4</span><span class="s1">) 
+                        address.setError(</span><span class="s2">&quot;Address is Too Short.&quot;</span><span class="s1">); 
+ 
+                    </span><span class="s0">else if</span><span class="s1">(dob.getText().length() != </span><span class="s3">10 </span><span class="s1">|| !datePattern.matcher(dob.getText()).matches()) 
+                        dob.setError(</span><span class="s2">&quot;Invalid DOB!&quot;</span><span class="s1">); 
+ 
+                    </span><span class="s0">else if</span><span class="s1">(time.getText().length() != </span><span class="s3">5 </span><span class="s1">|| !timePattern.matcher(time.getText()).matches()) 
+                        time.setError(</span><span class="s2">&quot;Invalid Suitable Time!&quot;</span><span class="s1">); 
+ 
+                    </span><span class="s0">else if</span><span class="s1">(spinner1.getSelectedItem().toString().equals(</span><span class="s0">new </span><span class="s1">String(</span><span class="s2">&quot;(Select Age Group)&quot;</span><span class="s1">))) 
+                        Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;Please Select a Valid Age Group.&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+ 
+                    </span><span class="s0">else </span><span class="s1">{ 
+                        toastText += </span><span class="s2">&quot;Name: &quot; </span><span class="s1">+ name.getText() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        toastText += </span><span class="s2">&quot;Ph No: &quot; </span><span class="s1">+ phone.getText() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        toastText += </span><span class="s2">&quot;Email: &quot; </span><span class="s1">+ email.getText() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        toastText += </span><span class="s2">&quot;Address: &quot; </span><span class="s1">+ address.getText() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        toastText += </span><span class="s2">&quot;DOB: &quot; </span><span class="s1">+ dob.getText() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        toastText += </span><span class="s2">&quot;Suitable Time: &quot; </span><span class="s1">+ time.getText() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        toastText += </span><span class="s2">&quot;Age Group: &quot; </span><span class="s1">+ spinner1.getSelectedItem().toString() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        toastText += </span><span class="s2">&quot;Gender: &quot; </span><span class="s1">+ radioButton.getText() + </span><span class="s2">&quot;</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+ 
+                        </span><span class="s0">if</span><span class="s1">(member.isActivated()) 
+                            toastText += </span><span class="s2">&quot;Member: Yes</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+                        </span><span class="s0">else</span><span class="s1"> 
+                            toastText += </span><span class="s2">&quot;Member: No</span><span class="s0">\n</span><span class="s2">&quot;</span><span class="s1">; 
+ 
+                        Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">, toastText, Toast.LENGTH_LONG).show(); 
+                        String []sendArray = {name.getText().toString(), phone.getText().toString(), email.getText().toString()}; 
+                        Intent in = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext(), Main2Activity.</span><span class="s0">class</span><span class="s1">); 
+                        in.putExtra(</span><span class="s2">&quot;sendArray&quot;</span><span class="s1">, sendArray); 
+                        startActivity(in); 
+                        finish(); 
+ 
+                    } 
+                } 
+                </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                    Toast.makeText(MainActivity.</span><span class="s0">this</span><span class="s1">,</span><span class="s2">&quot;Error in Submission!</span><span class="s0">\n</span><span class="s2">Please Fill Complete Values!&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                } 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">addItemOnSpinner() { 
+        Spinner spinner = (Spinner) findViewById(R.id.ageGroup); 
+ 
+        ArrayAdapter aa = </span><span class="s0">new </span><span class="s1">ArrayAdapter(</span><span class="s0">this</span><span class="s1">, android.R.layout.simple_spinner_item, spinItems); 
+ 
+        spinner.setAdapter(aa); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

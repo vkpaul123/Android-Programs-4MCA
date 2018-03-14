@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>SwipeGestureDetector.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(0,0,255); }
+.s5 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+SwipeGestureDetector.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.colorful; 
+ 
+</span><span class="s0">import </span><span class="s1">android.util.Log; 
+</span><span class="s0">import </span><span class="s1">android.view.GestureDetector; 
+</span><span class="s0">import </span><span class="s1">android.view.MotionEvent; 
+ 
+</span><span class="s2">/** 
+ * Created by vkpaul123 on 18-3-12. 
+ */</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">SwipeGestureDetector </span><span class="s0">extends </span><span class="s1">GestureDetector.SimpleOnGestureListener { 
+    </span><span class="s0">private static final </span><span class="s1">String TAG = </span><span class="s3">&quot;SimpleGestureListener&quot;</span><span class="s1">; 
+    </span><span class="s0">private </span><span class="s1">Listener mListener; 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onDown(MotionEvent e) { 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onScroll(MotionEvent e1, MotionEvent e2, </span><span class="s0">float </span><span class="s1">distanceX, </span><span class="s0">float </span><span class="s1">distanceY) { 
+        Log.i(TAG,e1.toString()+</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">+e2.toString()); 
+        Log.d(TAG,</span><span class="s3">&quot;distanceX = &quot;</span><span class="s1">+distanceX+</span><span class="s3">&quot;,distanceY = &quot;</span><span class="s1">+distanceY); 
+        </span><span class="s0">if </span><span class="s1">(mListener == </span><span class="s0">null</span><span class="s1">) 
+            </span><span class="s0">return true</span><span class="s1">; 
+ 
+        </span><span class="s0">if </span><span class="s1">(distanceX == </span><span class="s4">0 </span><span class="s1">&amp;&amp; Math.abs(distanceY) &gt; </span><span class="s4">1</span><span class="s1">){ 
+            mListener.onScrollVertical(distanceY); 
+        } 
+ 
+        </span><span class="s0">if </span><span class="s1">(distanceY == </span><span class="s4">0 </span><span class="s1">&amp;&amp; Math.abs(distanceX) &gt; </span><span class="s4">1</span><span class="s1">){ 
+            mListener.onScrollHorizontal(distanceX); 
+        } 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+ 
+    </span><span class="s0">public void </span><span class="s1">setListener(Listener mListener) { 
+        </span><span class="s0">this</span><span class="s1">.mListener = mListener; 
+    } 
+ 
+    </span><span class="s0">interface </span><span class="s1">Listener{ 
+        </span><span class="s2">/** 
+         * left scroll dx &gt;0 
+         * right scroll dx &lt;0 
+         * </span><span class="s5">@param </span><span class="s2">dx 
+         */</span><span class="s1"> 
+        </span><span class="s0">void </span><span class="s1">onScrollHorizontal(</span><span class="s0">float </span><span class="s1">dx); 
+ 
+        </span><span class="s2">/** 
+         * upward scroll dy &gt; 0 
+         * downward scroll dy &lt; 0 
+         * </span><span class="s5">@param </span><span class="s2">dy 
+         */</span><span class="s1"> 
+        </span><span class="s0">void </span><span class="s1">onScrollVertical(</span><span class="s0">float </span><span class="s1">dy); 
+    } 
+}</span></pre>
+</body>
+</html>

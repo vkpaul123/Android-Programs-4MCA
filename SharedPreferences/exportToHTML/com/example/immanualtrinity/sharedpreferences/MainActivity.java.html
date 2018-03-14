@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.immanualtrinity.sharedpreferences; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.content.SharedPreferences; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.*; 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    EditText e,e1,e2; 
+    String name,mob,home; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        e=(EditText)findViewById(R.id.editText); 
+        e1=(EditText)findViewById(R.id.editText2); 
+        e2=(EditText)findViewById(R.id.editText3); 
+ 
+ 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">toSave(View v) 
+    { 
+        String x=e.getText().toString(); 
+        String y=e1.getText().toString(); 
+        String z=e2.getText().toString(); 
+ 
+        SharedPreferences sharedpreferences = getSharedPreferences(</span><span class="s2">&quot;mydata&quot;</span><span class="s1">,Context.MODE_PRIVATE); 
+        sharedpreferences.getString(</span><span class="s2">&quot;name&quot;</span><span class="s1">,</span><span class="s2">&quot;&quot;</span><span class="s1">); 
+        sharedpreferences.getString(</span><span class="s2">&quot;mob&quot;</span><span class="s1">,</span><span class="s2">&quot;&quot;</span><span class="s1">); 
+        sharedpreferences.getString(</span><span class="s2">&quot;home&quot;</span><span class="s1">,</span><span class="s2">&quot;&quot;</span><span class="s1">); 
+ 
+        SharedPreferences.Editor ed = sharedpreferences.edit(); 
+ 
+ 
+        ed.putString(</span><span class="s2">&quot;name&quot;</span><span class="s1">,x); 
+        ed.putString(</span><span class="s2">&quot;mob&quot;</span><span class="s1">,y); 
+        ed.putString(</span><span class="s2">&quot;home&quot;</span><span class="s1">,z); 
+ 
+            ed.apply(); 
+            </span><span class="s3">// or</span><span class="s1"> 
+      </span><span class="s3">//  ed.commit();</span><span class="s1"> 
+ 
+ 
+        Intent i=</span><span class="s0">new </span><span class="s1">Intent(MainActivity.</span><span class="s0">this</span><span class="s1">,Main2Activity.</span><span class="s0">class</span><span class="s1">); 
+        startActivity(i); 
+ 
+    } 
+} 
+</span></pre>
+</body>
+</html>

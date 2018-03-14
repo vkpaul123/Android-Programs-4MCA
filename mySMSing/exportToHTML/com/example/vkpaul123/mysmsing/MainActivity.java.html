@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.mysmsing; 
+ 
+</span><span class="s0">import </span><span class="s1">android.Manifest; 
+</span><span class="s0">import </span><span class="s1">android.app.PendingIntent; 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.content.pm.PackageManager; 
+</span><span class="s0">import </span><span class="s1">android.net.Uri; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.telephony.SmsManager; 
+</span><span class="s0">import </span><span class="s1">android.text.TextUtils; 
+</span><span class="s0">import </span><span class="s1">android.util.Log; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    TextView phno, msg; 
+    Button smsMan, smsIntent; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        phno = (TextView) findViewById(R.id.phno); 
+        msg = (TextView) findViewById(R.id.msg); 
+ 
+        smsIntent = (Button) findViewById(R.id.btnIntent); 
+        smsMan = (Button) findViewById(R.id.btnSMSMan); 
+ 
+        smsIntent.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                String message = msg.getText().toString(); 
+                String phoneNo = phno.getText().toString(); 
+                </span><span class="s0">if</span><span class="s1">(!TextUtils.isEmpty(message) &amp;&amp; !TextUtils.isEmpty(phoneNo)) { 
+                    Intent smsIntent = </span><span class="s0">new </span><span class="s1">Intent(Intent.ACTION_SENDTO, Uri.parse(</span><span class="s2">&quot;smsto:&quot; </span><span class="s1">+ phoneNo)); 
+                    smsIntent.putExtra(</span><span class="s2">&quot;sms_body&quot;</span><span class="s1">, message); 
+                    startActivity(smsIntent); 
+                } 
+            } 
+        }); 
+ 
+        smsMan.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s0">int </span><span class="s1">PERMISSION_REQUEST_CODE = </span><span class="s3">1</span><span class="s1">; 
+ 
+                </span><span class="s0">if </span><span class="s1">(android.os.Build.VERSION.SDK_INT &gt;= android.os.Build.VERSION_CODES.M) { 
+ 
+                    </span><span class="s0">if </span><span class="s1">(checkSelfPermission(Manifest.permission.SEND_SMS) 
+                            == PackageManager.PERMISSION_DENIED) { 
+ 
+                        Log.d(</span><span class="s2">&quot;permission&quot;</span><span class="s1">, </span><span class="s2">&quot;permission denied to SEND_SMS - requesting it&quot;</span><span class="s1">); 
+                        String[] permissions = {Manifest.permission.SEND_SMS}; 
+ 
+                        requestPermissions(permissions, PERMISSION_REQUEST_CODE); 
+ 
+                    } 
+ 
+                    </span><span class="s0">if</span><span class="s1">(checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) { 
+                        Log.d(</span><span class="s2">&quot;permission&quot;</span><span class="s1">, </span><span class="s2">&quot;permission denied to READ_PHONE_STATE - requesting it&quot;</span><span class="s1">); 
+                        String[] permissions = {Manifest.permission.READ_PHONE_STATE}; 
+ 
+                        requestPermissions(permissions, PERMISSION_REQUEST_CODE); 
+                    } 
+                } 
+ 
+                String phoneNo = phno.getText().toString(); 
+                String message = msg.getText().toString(); 
+ 
+                Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext(),MainActivity.</span><span class="s0">class</span><span class="s1">); 
+                PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), </span><span class="s3">0</span><span class="s1">, intent,</span><span class="s3">0</span><span class="s1">); 
+ 
+                SmsManager sms=SmsManager.getDefault(); 
+                sms.sendTextMessage(phoneNo, </span><span class="s0">null</span><span class="s1">, message, pi,</span><span class="s0">null</span><span class="s1">); 
+ 
+                Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Message Sent successfully!&quot;</span><span class="s1">,Toast.LENGTH_LONG).show(); 
+            } 
+        }); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

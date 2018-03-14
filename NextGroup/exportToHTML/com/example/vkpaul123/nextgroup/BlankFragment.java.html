@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>BlankFragment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+BlankFragment.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.nextgroup; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.net.Uri; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.Nullable; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.Fragment; 
+</span><span class="s0">import </span><span class="s1">android.view.LayoutInflater; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.view.ViewGroup; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+ 
+</span><span class="s2">///**</span><span class="s1"> 
+</span><span class="s2">// * A simple {@link Fragment} subclass.</span><span class="s1"> 
+</span><span class="s2">// * Activities that contain this fragment must implement the</span><span class="s1"> 
+</span><span class="s2">// * {@link BlankFragment.OnFragmentInteractionListener} interface</span><span class="s1"> 
+</span><span class="s2">// * to handle interaction events.</span><span class="s1"> 
+</span><span class="s2">// * Use the {@link BlankFragment#newInstance} factory method to</span><span class="s1"> 
+</span><span class="s2">// * create an instance of this fragment.</span><span class="s1"> 
+</span><span class="s2">// */</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">BlankFragment </span><span class="s0">extends </span><span class="s1">Fragment { 
+</span><span class="s2">//    // TODO: Rename parameter arguments, choose names that match</span><span class="s1"> 
+</span><span class="s2">//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER</span><span class="s1"> 
+</span><span class="s2">//    private static final String ARG_PARAM1 = &quot;param1&quot;;</span><span class="s1"> 
+</span><span class="s2">//    private static final String ARG_PARAM2 = &quot;param2&quot;;</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    // TODO: Rename and change types of parameters</span><span class="s1"> 
+</span><span class="s2">//    private String mParam1;</span><span class="s1"> 
+</span><span class="s2">//    private String mParam2;</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    private OnFragmentInteractionListener mListener;</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    public BlankFragment() {</span><span class="s1"> 
+</span><span class="s2">//        // Required empty public constructor</span><span class="s1"> 
+</span><span class="s2">//    }</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    /**</span><span class="s1"> 
+</span><span class="s2">//     * Use this factory method to create a new instance of</span><span class="s1"> 
+</span><span class="s2">//     * this fragment using the provided parameters.</span><span class="s1"> 
+</span><span class="s2">//     *</span><span class="s1"> 
+</span><span class="s2">//     * @param param1 Parameter 1.</span><span class="s1"> 
+</span><span class="s2">//     * @param param2 Parameter 2.</span><span class="s1"> 
+</span><span class="s2">//     * @return A new instance of fragment BlankFragment.</span><span class="s1"> 
+</span><span class="s2">//     */</span><span class="s1"> 
+</span><span class="s2">//    // TODO: Rename and change types and number of parameters</span><span class="s1"> 
+</span><span class="s2">//    public static BlankFragment newInstance(String param1, String param2) {</span><span class="s1"> 
+</span><span class="s2">//        BlankFragment fragment = new BlankFragment();</span><span class="s1"> 
+</span><span class="s2">//        Bundle args = new Bundle();</span><span class="s1"> 
+</span><span class="s2">//        args.putString(ARG_PARAM1, param1);</span><span class="s1"> 
+</span><span class="s2">//        args.putString(ARG_PARAM2, param2);</span><span class="s1"> 
+</span><span class="s2">//        fragment.setArguments(args);</span><span class="s1"> 
+</span><span class="s2">//        return fragment;</span><span class="s1"> 
+</span><span class="s2">//    }</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    @Override</span><span class="s1"> 
+</span><span class="s2">//    public void onCreate(Bundle savedInstanceState) {</span><span class="s1"> 
+</span><span class="s2">//        super.onCreate(savedInstanceState);</span><span class="s1"> 
+</span><span class="s2">//        if (getArguments() != null) {</span><span class="s1"> 
+</span><span class="s2">//            mParam1 = getArguments().getString(ARG_PARAM1);</span><span class="s1"> 
+</span><span class="s2">//            mParam2 = getArguments().getString(ARG_PARAM2);</span><span class="s1"> 
+</span><span class="s2">//        }</span><span class="s1"> 
+</span><span class="s2">//    }</span><span class="s1"> 
+ 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">View onCreateView(LayoutInflater inflater, ViewGroup container, 
+                             Bundle savedInstanceState) { 
+        </span><span class="s2">// Inflate the layout for this fragment</span><span class="s1"> 
+        </span><span class="s0">return </span><span class="s1">inflater.inflate(R.layout.fragment_blank, container, </span><span class="s0">false</span><span class="s1">); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onViewCreated(View view, @Nullable Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onViewCreated(view, savedInstanceState); 
+ 
+        view.findViewById(R.id.button).setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                Toast.makeText(getContext(), </span><span class="s3">&quot;Blank Fragment 1&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s2">//    // TODO: Rename method, update argument and hook method into UI event</span><span class="s1"> 
+</span><span class="s2">//    public void onButtonPressed(Uri uri) {</span><span class="s1"> 
+</span><span class="s2">//        if (mListener != null) {</span><span class="s1"> 
+</span><span class="s2">//            mListener.onFragmentInteraction(uri);</span><span class="s1"> 
+</span><span class="s2">//        }</span><span class="s1"> 
+</span><span class="s2">//    }</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    @Override</span><span class="s1"> 
+</span><span class="s2">//    public void onAttach(Context context) {</span><span class="s1"> 
+</span><span class="s2">//        super.onAttach(context);</span><span class="s1"> 
+</span><span class="s2">//        if (context instanceof OnFragmentInteractionListener) {</span><span class="s1"> 
+</span><span class="s2">//            mListener = (OnFragmentInteractionListener) context;</span><span class="s1"> 
+</span><span class="s2">//        } else {</span><span class="s1"> 
+</span><span class="s2">//            throw new RuntimeException(context.toString()</span><span class="s1"> 
+</span><span class="s2">//                    + &quot; must implement OnFragmentInteractionListener&quot;);</span><span class="s1"> 
+</span><span class="s2">//        }</span><span class="s1"> 
+</span><span class="s2">//    }</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    @Override</span><span class="s1"> 
+</span><span class="s2">//    public void onDetach() {</span><span class="s1"> 
+</span><span class="s2">//        super.onDetach();</span><span class="s1"> 
+</span><span class="s2">//        mListener = null;</span><span class="s1"> 
+</span><span class="s2">//    }</span><span class="s1"> 
+</span><span class="s2">//</span><span class="s1"> 
+</span><span class="s2">//    /**</span><span class="s1"> 
+</span><span class="s2">//     * This interface must be implemented by activities that contain this</span><span class="s1"> 
+</span><span class="s2">//     * fragment to allow an interaction in this fragment to be communicated</span><span class="s1"> 
+</span><span class="s2">//     * to the activity and potentially other fragments contained in that</span><span class="s1"> 
+</span><span class="s2">//     * activity.</span><span class="s1"> 
+</span><span class="s2">//     * &lt;p&gt;</span><span class="s1"> 
+</span><span class="s2">//     * See the Android Training lesson &lt;a href=</span><span class="s1"> 
+</span><span class="s2">//     * &quot;http://developer.android.com/training/basics/fragments/communicating.html&quot;</span><span class="s1"> 
+</span><span class="s2">//     * &gt;Communicating with Other Fragments&lt;/a&gt; for more information.</span><span class="s1"> 
+</span><span class="s2">//     */</span><span class="s1"> 
+</span><span class="s2">//    public interface OnFragmentInteractionListener {</span><span class="s1"> 
+</span><span class="s2">//        // TODO: Update argument type and name</span><span class="s1"> 
+</span><span class="s2">//        void onFragmentInteraction(Uri uri);</span><span class="s1"> 
+</span><span class="s2">//    }</span><span class="s1"> 
+} 
+</span></pre>
+</body>
+</html>

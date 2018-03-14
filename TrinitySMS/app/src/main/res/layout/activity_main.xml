@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
+    android:background="@drawable/a8"
+    tools:context="com.example.immanualtrinity.trinitysms.MainActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:text="Enter the mobile number of the recipient" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_marginTop="30dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        android:hint="Eg: 95342123456" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        android:text="Enter Message" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_marginTop="30dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Enter the body of the message" />
+
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_marginTop="30dp"
+        android:layout_width="250dp"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:layout_height="70dp"
+        android:text="Send SMS" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_marginTop="30dp"
+        android:layout_width="250dp"
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        android:layout_height="70dp"
+        android:text="Send using Built-in SMS App" />
+</LinearLayout>

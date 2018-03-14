@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>DBHelper.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,0,255); }
+.s4 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+DBHelper.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.iamsqlitebro; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase; 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteOpenHelper; 
+ 
+</span><span class="s2">/** 
+ * Created by vkpaul123 on 31/1/18. 
+ */</span><span class="s1"> 
+ 
+</span><span class="s0">public class </span><span class="s1">DBHelper </span><span class="s0">extends </span><span class="s1">SQLiteOpenHelper { 
+ 
+    </span><span class="s0">private static final int </span><span class="s1">DATABASE_VERSION = </span><span class="s3">1</span><span class="s1">; 
+ 
+    </span><span class="s0">private static final </span><span class="s1">String DATABASE_NAME = </span><span class="s4">&quot;studentManager&quot;</span><span class="s1">; 
+ 
+    </span><span class="s0">private static final </span><span class="s1">String SQL_CREATE_ENTRIES = 
+            </span><span class="s4">&quot;CREATE TABLE &quot; </span><span class="s1">+ StudentContract.FeedEntry.tableName + </span><span class="s4">&quot; (&quot; </span><span class="s1">+ 
+                    StudentContract.FeedEntry.col1 + </span><span class="s4">&quot; INTEGER PRIMARY KEY AUTOINCREMENT,&quot; </span><span class="s1">+ 
+                    StudentContract.FeedEntry.col2 + </span><span class="s4">&quot; TEXT,&quot; </span><span class="s1">+ 
+                    StudentContract.FeedEntry.col3 + </span><span class="s4">&quot; TEXT)&quot;</span><span class="s1">; 
+ 
+    </span><span class="s0">private static final </span><span class="s1">String SQL_DELETE_ENTRIES = 
+            </span><span class="s4">&quot;DROP TABLE IF EXISTS &quot; </span><span class="s1">+ StudentContract.FeedEntry.tableName; 
+ 
+    </span><span class="s0">public </span><span class="s1">DBHelper(Context context) { 
+        </span><span class="s0">super</span><span class="s1">(context, DATABASE_NAME, </span><span class="s0">null</span><span class="s1">, DATABASE_VERSION); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onCreate(SQLiteDatabase db) { 
+        db.execSQL(SQL_CREATE_ENTRIES); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onUpgrade(SQLiteDatabase db, </span><span class="s0">int </span><span class="s1">oldVersion, </span><span class="s0">int </span><span class="s1">newVersion) { 
+        db.execSQL(SQL_DELETE_ENTRIES); 
+        onCreate(db); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">onDowngrade(SQLiteDatabase db, </span><span class="s0">int </span><span class="s1">oldVersion, </span><span class="s0">int </span><span class="s1">newVersion) { 
+        onUpgrade(db, oldVersion, newVersion); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

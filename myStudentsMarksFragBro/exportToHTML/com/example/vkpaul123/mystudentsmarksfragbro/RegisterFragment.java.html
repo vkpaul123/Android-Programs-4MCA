@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>RegisterFragment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+RegisterFragment.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro; 
+ 
+</span><span class="s0">import </span><span class="s1">android.app.Notification; 
+</span><span class="s0">import </span><span class="s1">android.app.NotificationChannel; 
+</span><span class="s0">import </span><span class="s1">android.app.NotificationManager; 
+</span><span class="s0">import </span><span class="s1">android.app.PendingIntent; 
+</span><span class="s0">import </span><span class="s1">android.content.ContentValues; 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase; 
+</span><span class="s0">import </span><span class="s1">android.graphics.Bitmap; 
+</span><span class="s0">import </span><span class="s1">android.graphics.BitmapFactory; 
+</span><span class="s0">import </span><span class="s1">android.net.Uri; 
+</span><span class="s0">import </span><span class="s1">android.os.Build; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.Nullable; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.Fragment; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentManager; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentTransaction; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.NotificationCompat; 
+</span><span class="s0">import </span><span class="s1">android.telephony.SmsManager; 
+</span><span class="s0">import </span><span class="s1">android.view.LayoutInflater; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.view.ViewGroup; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import static </span><span class="s1">android.content.Context.NOTIFICATION_SERVICE; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col2; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col3; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col4; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col5; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col6; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col7; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col8; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.col9; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.mystudentsmarksfragbro.StudentContract.FeedEntry.tableName; 
+ 
+</span><span class="s0">public class </span><span class="s1">RegisterFragment </span><span class="s0">extends </span><span class="s1">Fragment { 
+    EditText studName; 
+    EditText studParent; 
+    EditText studMarks1; 
+    EditText studMarks2; 
+    EditText studMarks3; 
+    EditText studMarks4; 
+ 
+    TextView allotedID; 
+ 
+    Button btnCalc, btnDisplay; 
+ 
+    DBHelper dbHelper; 
+ 
+    String sName, sParentPhNo, sMarks1, sMarks2, sMarks3, sMarks4; 
+ 
+    </span><span class="s0">private  static final int </span><span class="s1">NOTIFICATION_ID = </span><span class="s2">1</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String NOTIFICATION_CHANNEL_ID = </span><span class="s3">&quot;my_notifications_channel&quot;</span><span class="s1">; 
+ 
+    @Nullable 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) { 
+        View view = inflater.inflate(R.layout.fragment_register, container, </span><span class="s0">false</span><span class="s1">); 
+ 
+        dbHelper = </span><span class="s0">new </span><span class="s1">DBHelper(getContext()); 
+ 
+        studName = view.findViewById(R.id.editTextStudName); 
+        studParent = view.findViewById(R.id.editTextParentPhNo); 
+ 
+        studMarks1 = view.findViewById(R.id.editTextSub1); 
+        studMarks2 = view.findViewById(R.id.editTextSub2); 
+        studMarks3 = view.findViewById(R.id.editTextSub3); 
+        studMarks4 = view.findViewById(R.id.editTextSub4); 
+ 
+        btnCalc = view.findViewById(R.id.buttonCalculate); 
+ 
+        allotedID = view.findViewById(R.id.studAllotedID); 
+ 
+        btnDisplay = view.findViewById(R.id.buttonDisplay); 
+ 
+        btnCalc.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                sName = studName.getText().toString(); 
+                sParentPhNo = studParent.getText().toString(); 
+                sMarks1 = studMarks1.getText().toString(); 
+                sMarks2 = studMarks2.getText().toString(); 
+                sMarks3 = studMarks3.getText().toString(); 
+                sMarks4 = studMarks4.getText().toString(); 
+ 
+                SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase(); 
+                ContentValues contentValues = </span><span class="s0">new </span><span class="s1">ContentValues(); 
+ 
+                contentValues.put(col2, sName); 
+                contentValues.put(col3, sParentPhNo); 
+                contentValues.put(col4, sMarks1); 
+                contentValues.put(col5, sMarks2); 
+                contentValues.put(col6, sMarks3); 
+                contentValues.put(col7, sMarks4); 
+ 
+                </span><span class="s0">float </span><span class="s1">tot = Float.parseFloat(sMarks1) + 
+                        Float.parseFloat(sMarks2) + 
+                        Float.parseFloat(sMarks3) + 
+                        Float.parseFloat(sMarks4); 
+ 
+                </span><span class="s0">float </span><span class="s1">perc = tot*</span><span class="s2">0.25f</span><span class="s1">; 
+ 
+                contentValues.put(col8, </span><span class="s0">new </span><span class="s1">Float(tot).toString()); 
+                contentValues.put(col9, </span><span class="s0">new </span><span class="s1">Float(perc).toString()); 
+ 
+                </span><span class="s0">long </span><span class="s1">result = sqLiteDatabase.insert(tableName, </span><span class="s0">null</span><span class="s1">, contentValues); 
+ 
+                </span><span class="s0">if</span><span class="s1">(result == -</span><span class="s2">1</span><span class="s1">) 
+                    Toast.makeText(getContext(), </span><span class="s3">&quot;Data Not Inserted&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    allotedID.setText(</span><span class="s0">new </span><span class="s1">Long(result).toString()); 
+                    Toast.makeText(getContext(), </span><span class="s3">&quot;DATA  INSERTED &quot; </span><span class="s1">+ result, Toast.LENGTH_LONG).show(); 
+                } 
+ 
+                </span><span class="s0">if </span><span class="s1">(perc &gt; </span><span class="s2">75f</span><span class="s1">) { 
+                    NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE); 
+ 
+                    Bitmap myImage = BitmapFactory.decodeResource(getResources(), R.drawable.good); 
+ 
+                    </span><span class="s0">if</span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) { 
+                        NotificationChannel notificationChannel = </span><span class="s0">new </span><span class="s1">NotificationChannel(NOTIFICATION_CHANNEL_ID, </span><span class="s3">&quot;My Notifications&quot;</span><span class="s1">, NotificationManager.IMPORTANCE_DEFAULT); 
+                        notificationManager.createNotificationChannel(notificationChannel); 
+                    } 
+ 
+                    NotificationCompat.Builder builder = </span><span class="s0">new </span><span class="s1">NotificationCompat.Builder(getActivity().getApplicationContext(), NOTIFICATION_CHANNEL_ID) 
+                            .setSmallIcon(R.mipmap.ic_launcher) 
+                            .setContentTitle(</span><span class="s3">&quot;Student Report&quot;</span><span class="s1">) 
+                            .setChannelId(NOTIFICATION_CHANNEL_ID) 
+                            .setContentText(</span><span class="s3">&quot;Good Work, &quot; </span><span class="s1">+ sName + </span><span class="s3">&quot;. Your Percentage is &quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Float(perc).toString() + </span><span class="s3">&quot;%.&quot;</span><span class="s1">) 
+                            .setSmallIcon(R.drawable.ic_my_noti_icon) 
+                            .setStyle(</span><span class="s0">new </span><span class="s1">NotificationCompat.BigPictureStyle() 
+                                    .bigPicture(myImage)); 
+ 
+                    Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getActivity().getApplicationContext(), MainActivity.</span><span class="s0">class</span><span class="s1">); 
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(), </span><span class="s2">0</span><span class="s1">, intent, PendingIntent.FLAG_CANCEL_CURRENT); 
+ 
+                    builder.setContentIntent(pendingIntent); 
+ 
+                    Notification notification = builder.build(); 
+ 
+                    notificationManager.notify(NOTIFICATION_ID, builder.build()); 
+                } </span><span class="s0">else if </span><span class="s1">(perc &lt; </span><span class="s2">50f</span><span class="s1">) { 
+                    String phoneNo = sParentPhNo; 
+                    String message = </span><span class="s3">&quot;Dear Parent, Your Student, &quot; </span><span class="s1">+ sName + </span><span class="s3">&quot;, has performed below satisfactory level, with &quot; </span><span class="s1">+ </span><span class="s0">new </span><span class="s1">Float(perc).toString() + </span><span class="s3">&quot;%.&quot;</span><span class="s1">; 
+ 
+                    Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getActivity().getApplicationContext(), MainActivity.</span><span class="s0">class</span><span class="s1">); 
+                    intent.putExtra(</span><span class="s3">&quot;studID1&quot;</span><span class="s1">, allotedID.getText().toString()); 
+                    PendingIntent pi = PendingIntent.getActivity(getActivity(), </span><span class="s2">0</span><span class="s1">, intent,</span><span class="s2">0</span><span class="s1">); 
+ 
+                    SmsManager sms = SmsManager.getDefault(); 
+                    sms.sendTextMessage(phoneNo, </span><span class="s0">null</span><span class="s1">, message, pi,</span><span class="s0">null</span><span class="s1">); 
+ 
+                    allotedID.setText(</span><span class="s0">new </span><span class="s1">Long(result).toString()); 
+ 
+                    Toast.makeText(getActivity(), </span><span class="s3">&quot;Message Sent successfully!&quot;</span><span class="s1">,Toast.LENGTH_LONG).show(); 
+                } 
+            } 
+        }); 
+ 
+        btnDisplay.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                String sID = allotedID.getText().toString(); 
+ 
+                </span><span class="s0">if</span><span class="s1">(sID.equals(</span><span class="s3">&quot;&quot;</span><span class="s1">) == </span><span class="s0">false</span><span class="s1">) { 
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager(); 
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction(); 
+ 
+                    Bundle args = </span><span class="s0">new </span><span class="s1">Bundle(); 
+ 
+                    args.putString(</span><span class="s3">&quot;studID&quot;</span><span class="s1">, sID); 
+ 
+                    MarksFragment blankFragment = </span><span class="s0">new </span><span class="s1">MarksFragment(); 
+                    blankFragment.setArguments(args); 
+ 
+                    fragmentTransaction.replace(R.id.fragment_container, blankFragment); 
+                    fragmentTransaction.commit(); 
+                } 
+                </span><span class="s0">else</span><span class="s1"> 
+                    Toast.makeText(getActivity().getApplicationContext(), </span><span class="s3">&quot;Please Register Student First!&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+            } 
+        }); 
+ 
+        </span><span class="s0">return </span><span class="s1">view; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onViewCreated(View view, @Nullable Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onViewCreated(view, savedInstanceState); 
+ 
+        getActivity().setTitle(</span><span class="s3">&quot;Create Student Record&quot;</span><span class="s1">); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onDestroy() { 
+        dbHelper.close(); 
+        </span><span class="s0">super</span><span class="s1">.onDestroy(); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.wifibluetooth; 
+ 
+</span><span class="s0">import </span><span class="s1">android.app.DialogFragment; 
+</span><span class="s0">import </span><span class="s1">android.app.ProgressDialog; 
+</span><span class="s0">import </span><span class="s1">android.bluetooth.BluetoothAdapter; 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.content.DialogInterface; 
+</span><span class="s0">import </span><span class="s1">android.net.ConnectivityManager; 
+</span><span class="s0">import </span><span class="s1">android.net.NetworkInfo; 
+</span><span class="s0">import </span><span class="s1">android.net.wifi.WifiManager; 
+</span><span class="s0">import </span><span class="s1">android.os.Handler; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    Button bluetoothBtn; 
+    Button wifiBtn; 
+    Button spinnBtn; 
+    Button horizBtn; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        bluetoothBtn = (Button) findViewById(R.id.bluetoothButton); 
+        wifiBtn = (Button) findViewById(R.id.wifiButton); 
+ 
+        spinnBtn = (Button) findViewById(R.id.spinButton); 
+        horizBtn = (Button) findViewById(R.id.horizButton); 
+ 
+        </span><span class="s0">try </span><span class="s1">{ 
+            bluetoothToggle(); 
+            wifiToggle(); 
+ 
+            spinnerDialog(); 
+            horizDialog(); 
+        } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+            System.err.println(e); 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">bluetoothToggle() { 
+        bluetoothBtn.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter(); 
+                </span><span class="s0">if</span><span class="s1">(!bluetoothAdapter.isEnabled()) { 
+                    bluetoothAdapter.enable(); 
+                    Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Bluetooth ON&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    bluetoothAdapter.disable(); 
+                    Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Bluetooth OFF&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                } 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">wifiToggle() { 
+        wifiBtn.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                WifiManager wifiManager = (WifiManager) MainActivity.</span><span class="s0">this</span><span class="s1">.getApplicationContext().getSystemService(Context.WIFI_SERVICE); 
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE); 
+ 
+                NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI); 
+ 
+                </span><span class="s0">if</span><span class="s1">(wifiManager.isWifiEnabled()) { 
+                    wifiManager.setWifiEnabled(</span><span class="s0">false</span><span class="s1">); 
+                    Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Wifi OFF&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    wifiManager.setWifiEnabled(</span><span class="s0">true</span><span class="s1">); 
+                    Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Wifi ON&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                } 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">spinnerDialog() { 
+        spinnBtn.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                ProgressDialog progressDialog = </span><span class="s0">new </span><span class="s1">ProgressDialog(MainActivity.</span><span class="s0">this</span><span class="s1">); 
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); 
+                progressDialog.setMessage(</span><span class="s2">&quot;This is an example of Spinner Dialog.&quot;</span><span class="s1">); 
+                progressDialog.setIndeterminate(</span><span class="s0">true</span><span class="s1">); 
+                progressDialog.setCancelable(</span><span class="s0">true</span><span class="s1">); 
+                progressDialog.show(); 
+ 
+                progressDialog.setOnCancelListener(</span><span class="s0">new </span><span class="s1">DialogInterface.OnCancelListener() { 
+                    @Override 
+                    </span><span class="s0">public void </span><span class="s1">onCancel(DialogInterface v) { 
+                        Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Spinner Dialog CANCELLED&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                    } 
+                }); 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">horizDialog() { 
+        horizBtn.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                </span><span class="s0">final </span><span class="s1">ProgressDialog progressDialog = </span><span class="s0">new </span><span class="s1">ProgressDialog(MainActivity.</span><span class="s0">this</span><span class="s1">); 
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL); 
+                progressDialog.setMessage(</span><span class="s2">&quot;This is an example of Horizontal Dialog with Timer.&quot;</span><span class="s1">); 
+                progressDialog.setCancelable(</span><span class="s0">true</span><span class="s1">); 
+                progressDialog.show(); 
+ 
+                </span><span class="s0">final </span><span class="s1">Handler handler = </span><span class="s0">new </span><span class="s1">Handler(); 
+                Runnable runnable = </span><span class="s0">new </span><span class="s1">Runnable() { 
+                    @Override 
+                    </span><span class="s0">public void </span><span class="s1">run() { 
+                        </span><span class="s0">while</span><span class="s1">(progressDialog.getProgress() &lt; </span><span class="s3">100</span><span class="s1">) { 
+                            </span><span class="s0">try </span><span class="s1">{ 
+                                Thread.sleep(</span><span class="s3">100</span><span class="s1">); 
+                            } </span><span class="s0">catch </span><span class="s1">(InterruptedException e) { 
+                                System.err.println(e); 
+                            } 
+                            handler.post(</span><span class="s0">new </span><span class="s1">Runnable() { 
+                                @Override 
+                                </span><span class="s0">public void </span><span class="s1">run() { 
+                                    progressDialog.setProgress(progressDialog.getProgress() + </span><span class="s3">1</span><span class="s1">); 
+                                } 
+                            }); 
+                        } 
+                        progressDialog.cancel(); 
+                    } 
+                }; 
+                </span><span class="s0">new </span><span class="s1">Thread(runnable).start(); 
+ 
+                progressDialog.setOnCancelListener(</span><span class="s0">new </span><span class="s1">DialogInterface.OnCancelListener() { 
+                    @Override 
+                    </span><span class="s0">public void </span><span class="s1">onCancel(DialogInterface dialog) { 
+                        Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Horizontal Dialog CANCLLED&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                    } 
+                }); 
+            } 
+        }); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

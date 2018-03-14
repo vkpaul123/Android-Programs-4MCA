@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>UpdateRecordFragment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+UpdateRecordFragment.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.iamsqlitebro; 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.ContentValues; 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.database.Cursor; 
+</span><span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase; 
+</span><span class="s0">import </span><span class="s1">android.net.Uri; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.Nullable; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.Fragment; 
+</span><span class="s0">import </span><span class="s1">android.view.LayoutInflater; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.view.ViewGroup; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.iamsqlitebro.StudentContract.FeedEntry.col1; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.iamsqlitebro.StudentContract.FeedEntry.col2; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.iamsqlitebro.StudentContract.FeedEntry.col3; 
+</span><span class="s0">import static </span><span class="s1">com.example.vkpaul123.iamsqlitebro.StudentContract.FeedEntry.tableName; 
+ 
+</span><span class="s0">public class </span><span class="s1">UpdateRecordFragment </span><span class="s0">extends </span><span class="s1">Fragment { 
+ 
+    EditText studRegNo; 
+ 
+    EditText studName; 
+    EditText studClass; 
+    Button btnFind, btnUpdate; 
+ 
+    DBHelper dbHelper; 
+ 
+    String sRegNo, ssRegNo; 
+    String sName, ssName; 
+    String sClass, ssClass; 
+ 
+    @Override 
+    </span><span class="s0">public </span><span class="s1">View onCreateView(LayoutInflater inflater, ViewGroup container, 
+                             Bundle savedInstanceState) { 
+        </span><span class="s2">// Inflate the layout for this fragment</span><span class="s1"> 
+        View view = inflater.inflate(R.layout.fragment_update_record, container, </span><span class="s0">false</span><span class="s1">); 
+ 
+        studRegNo = (EditText) view.findViewById(R.id.editTextRegNoFindUpdate); 
+        btnFind = (Button) view.findViewById(R.id.buttonFindToUpdate); 
+ 
+        studName = (EditText) view.findViewById(R.id.editTextNameUpdate); 
+        studClass = (EditText) view.findViewById(R.id.editTextClassUpdate); 
+ 
+        btnUpdate = (Button) view.findViewById(R.id.buttonUpdate); 
+ 
+        dbHelper = </span><span class="s0">new </span><span class="s1">DBHelper(getContext()); 
+ 
+        btnFind.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                sRegNo = studRegNo.getText().toString(); 
+ 
+                SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase(); 
+                Cursor cursor = sqLiteDatabase.rawQuery(</span><span class="s3">&quot;SELECT * FROM &quot; </span><span class="s1">+ tableName + </span><span class="s3">&quot; WHERE &quot; </span><span class="s1">+ col1 + </span><span class="s3">&quot;=&quot; </span><span class="s1">+ sRegNo, </span><span class="s0">null</span><span class="s1">); 
+ 
+                </span><span class="s0">if</span><span class="s1">(cursor != </span><span class="s0">null</span><span class="s1">) { 
+                    </span><span class="s0">if</span><span class="s1">(cursor.moveToFirst()) { 
+                        studName.setText(cursor.getString(cursor.getColumnIndex(col2))); 
+                        studClass.setText(cursor.getString(cursor.getColumnIndex(col3))); 
+                    } 
+                } 
+            } 
+        }); 
+ 
+        btnUpdate.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                sRegNo = studRegNo.getText().toString(); 
+                ssName = studName.getText().toString(); 
+                ssClass = studClass.getText().toString(); 
+ 
+                SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase(); 
+                ContentValues contentValues = </span><span class="s0">new </span><span class="s1">ContentValues(); 
+ 
+                contentValues.put(col2, ssName); 
+                contentValues.put(col3, ssClass); 
+ 
+                </span><span class="s0">int </span><span class="s1">result = sqLiteDatabase.update(tableName, contentValues, col1+</span><span class="s3">&quot; = &quot; </span><span class="s1">+ sRegNo, </span><span class="s0">null</span><span class="s1">); 
+ 
+                </span><span class="s0">if</span><span class="s1">(result == -</span><span class="s4">1</span><span class="s1">) { 
+                    Toast.makeText(getContext(), </span><span class="s3">&quot;Update Failed.&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+                } </span><span class="s0">else </span><span class="s1">{ 
+                    Toast.makeText(getContext(), </span><span class="s3">&quot;Update Success.&quot;</span><span class="s1">+result, Toast.LENGTH_SHORT).show(); 
+                } 
+            } 
+        }); 
+ 
+        </span><span class="s0">return </span><span class="s1">view; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onViewCreated(View view, @Nullable Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onViewCreated(view, savedInstanceState); 
+        getActivity().setTitle(</span><span class="s3">&quot;Update Record&quot;</span><span class="s1">); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onDestroy() { 
+        dbHelper.close(); 
+        </span><span class="s0">super</span><span class="s1">.onDestroy(); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

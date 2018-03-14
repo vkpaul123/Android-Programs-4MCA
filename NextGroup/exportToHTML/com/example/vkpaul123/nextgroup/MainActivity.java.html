@@ -1,0 +1,186 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+.s4 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.nextgroup; 
+ 
+</span><span class="s0">import </span><span class="s1">android.app.ProgressDialog; 
+</span><span class="s0">import </span><span class="s1">android.os.AsyncTask; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.FloatingActionButton; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.Snackbar; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentManager; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentTransaction; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.NavigationView; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.view.GravityCompat; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.widget.DrawerLayout; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.ActionBarDrawerToggle; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar; 
+</span><span class="s0">import </span><span class="s1">android.view.Menu; 
+</span><span class="s0">import </span><span class="s1">android.view.MenuItem; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity 
+        </span><span class="s0">implements </span><span class="s1">NavigationView.OnNavigationItemSelectedListener { 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); 
+        setSupportActionBar(toolbar); 
+ 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); 
+        fab.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                Snackbar.make(view, </span><span class="s2">&quot;Replace with your own action&quot;</span><span class="s1">, Snackbar.LENGTH_LONG) 
+                        .setAction(</span><span class="s2">&quot;Action&quot;</span><span class="s1">, </span><span class="s0">null</span><span class="s1">).show(); 
+            } 
+        }); 
+ 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout); 
+        ActionBarDrawerToggle toggle = </span><span class="s0">new </span><span class="s1">ActionBarDrawerToggle( 
+                </span><span class="s0">this</span><span class="s1">, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close); 
+        drawer.addDrawerListener(toggle); 
+        toggle.syncState(); 
+ 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view); 
+        navigationView.setNavigationItemSelectedListener(</span><span class="s0">this</span><span class="s1">); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onBackPressed() { 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout); 
+        </span><span class="s0">if </span><span class="s1">(drawer.isDrawerOpen(GravityCompat.START)) { 
+            drawer.closeDrawer(GravityCompat.START); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">super</span><span class="s1">.onBackPressed(); 
+        } 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu(Menu menu) { 
+        </span><span class="s3">// Inflate the menu; this adds items to the action bar if it is present.</span><span class="s1"> 
+        getMenuInflater().inflate(R.menu.main, menu); 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(MenuItem item) { 
+        </span><span class="s3">// Handle action bar item clicks here. The action bar will</span><span class="s1"> 
+        </span><span class="s3">// automatically handle clicks on the Home/Up button, so long</span><span class="s1"> 
+        </span><span class="s3">// as you specify a parent activity in AndroidManifest.xml.</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">id = item.getItemId(); 
+ 
+        </span><span class="s3">//noinspection SimplifiableIfStatement</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(id == R.id.action_settings) { 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item); 
+    } 
+ 
+    @SuppressWarnings(</span><span class="s2">&quot;StatementWithEmptyBody&quot;</span><span class="s1">) 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onNavigationItemSelected(MenuItem item) { 
+        </span><span class="s3">// Handle navigation view item clicks here.</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">id = item.getItemId(); 
+ 
+        </span><span class="s0">if </span><span class="s1">(id == R.id.nav_camera) { 
+            FragmentManager fragmentManager = getSupportFragmentManager(); 
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction(); 
+ 
+            BlankFragment blankFragment = </span><span class="s0">new </span><span class="s1">BlankFragment(); 
+ 
+            fragmentTransaction.replace(R.id.fragmentContainer, blankFragment); 
+            fragmentTransaction.commit(); 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Frag 1&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+        } </span><span class="s0">else if </span><span class="s1">(id == R.id.nav_share) { 
+            FragmentManager fragmentManager = getSupportFragmentManager(); 
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction(); 
+ 
+            BlankFragment2 blankFragment2 = </span><span class="s0">new </span><span class="s1">BlankFragment2(); 
+ 
+            fragmentTransaction.replace(R.id.fragmentContainer, blankFragment2); 
+            fragmentTransaction.commit(); 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Frag 2&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+        } </span><span class="s0">else if </span><span class="s1">(id == R.id.fiveSec) { 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;5 Seconds Progress Bar&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+            AsyncTaskRunner runner = </span><span class="s0">new </span><span class="s1">AsyncTaskRunner(); 
+            runner.execute(</span><span class="s2">&quot;5&quot;</span><span class="s1">); 
+        } </span><span class="s0">else if </span><span class="s1">(id == R.id.tenSec) { 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;10 Seconds Progress Bar&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+            AsyncTaskRunner runner = </span><span class="s0">new </span><span class="s1">AsyncTaskRunner(); 
+            runner.execute(</span><span class="s2">&quot;10&quot;</span><span class="s1">); 
+        } </span><span class="s0">else if </span><span class="s1">(id == R.id.fifteenSec) { 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;15 Seconds Progress Bar&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+            AsyncTaskRunner runner = </span><span class="s0">new </span><span class="s1">AsyncTaskRunner(); 
+            runner.execute(</span><span class="s2">&quot;15&quot;</span><span class="s1">); 
+        } 
+ 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout); 
+        drawer.closeDrawer(GravityCompat.START); 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s0">private class </span><span class="s1">AsyncTaskRunner </span><span class="s0">extends </span><span class="s1">AsyncTask&lt;String, String, String&gt; { 
+        </span><span class="s0">private </span><span class="s1">String resp; 
+        ProgressDialog progressDialog; 
+ 
+        @Override 
+        </span><span class="s0">protected </span><span class="s1">String doInBackground(String... strings) { 
+            publishProgress(</span><span class="s2">&quot;Sleeping...&quot;</span><span class="s1">); 
+ 
+            </span><span class="s0">try </span><span class="s1">{ 
+                </span><span class="s0">int </span><span class="s1">time = Integer.parseInt(strings[</span><span class="s4">0</span><span class="s1">]) * </span><span class="s4">1000</span><span class="s1">; 
+ 
+                Thread.sleep(time); 
+ 
+                resp = </span><span class="s2">&quot;Slept for &quot; </span><span class="s1">+ strings[</span><span class="s4">0</span><span class="s1">] + </span><span class="s2">&quot;second(s).&quot;</span><span class="s1">; 
+            } </span><span class="s0">catch </span><span class="s1">(Exception e) { 
+                e.printStackTrace(); 
+                resp = e.getMessage(); 
+            } </span><span class="s0">finally </span><span class="s1">{ 
+                </span><span class="s0">return </span><span class="s1">resp; 
+            } 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPostExecute(String s) { 
+            progressDialog.dismiss(); 
+            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show(); 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onPreExecute() { 
+            progressDialog = ProgressDialog.show(MainActivity.</span><span class="s0">this</span><span class="s1">, </span><span class="s2">&quot;My Progress Dialog&quot;</span><span class="s1">, </span><span class="s2">&quot;Please Wait&quot;</span><span class="s1">); 
+        } 
+ 
+        @Override 
+        </span><span class="s0">protected void </span><span class="s1">onProgressUpdate(String... values) { 
+            Toast.makeText(getApplicationContext(), values[</span><span class="s4">0</span><span class="s1">], Toast.LENGTH_SHORT).show(); 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>

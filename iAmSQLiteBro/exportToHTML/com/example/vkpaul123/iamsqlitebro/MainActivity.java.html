@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,128,0); font-weight: bold; }
+.s3 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.iamsqlitebro; 
+ 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.FloatingActionButton; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.Snackbar; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentManager; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentTransaction; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.NavigationView; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.view.GravityCompat; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.widget.DrawerLayout; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.ActionBarDrawerToggle; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar; 
+</span><span class="s0">import </span><span class="s1">android.view.Menu; 
+</span><span class="s0">import </span><span class="s1">android.view.MenuItem; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity 
+        </span><span class="s0">implements </span><span class="s1">NavigationView.OnNavigationItemSelectedListener { 
+ 
+    Button createStudent; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); 
+        setSupportActionBar(toolbar); 
+ 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab); 
+        fab.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View view) { 
+                Snackbar.make(view, </span><span class="s2">&quot;Replace with your own action&quot;</span><span class="s1">, Snackbar.LENGTH_LONG) 
+                        .setAction(</span><span class="s2">&quot;Action&quot;</span><span class="s1">, </span><span class="s0">null</span><span class="s1">).show(); 
+            } 
+        }); 
+ 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout); 
+        ActionBarDrawerToggle toggle = </span><span class="s0">new </span><span class="s1">ActionBarDrawerToggle( 
+                </span><span class="s0">this</span><span class="s1">, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close); 
+        drawer.addDrawerListener(toggle); 
+        toggle.syncState(); 
+ 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view); 
+        navigationView.setNavigationItemSelectedListener(</span><span class="s0">this</span><span class="s1">); 
+ 
+        insertStudent(); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public void </span><span class="s1">onBackPressed() { 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout); 
+        </span><span class="s0">if </span><span class="s1">(drawer.isDrawerOpen(GravityCompat.START)) { 
+            drawer.closeDrawer(GravityCompat.START); 
+        } </span><span class="s0">else </span><span class="s1">{ 
+            </span><span class="s0">super</span><span class="s1">.onBackPressed(); 
+        } 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu(Menu menu) { 
+        </span><span class="s3">// Inflate the menu; this adds items to the action bar if it is present.</span><span class="s1"> 
+        getMenuInflater().inflate(R.menu.main, menu); 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(MenuItem item) { 
+        </span><span class="s3">// Handle action bar item clicks here. The action bar will</span><span class="s1"> 
+        </span><span class="s3">// automatically handle clicks on the Home/Up button, so long</span><span class="s1"> 
+        </span><span class="s3">// as you specify a parent activity in AndroidManifest.xml.</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">id = item.getItemId(); 
+ 
+        </span><span class="s3">//noinspection SimplifiableIfStatement</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(id == R.id.action_settings) { 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item); 
+    } 
+ 
+    @SuppressWarnings(</span><span class="s2">&quot;StatementWithEmptyBody&quot;</span><span class="s1">) 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onNavigationItemSelected(MenuItem item) { 
+        </span><span class="s3">// Handle navigation view item clicks here.</span><span class="s1"> 
+ 
+        FragmentManager fragmentManager = getSupportFragmentManager(); 
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction(); 
+ 
+        </span><span class="s0">int </span><span class="s1">id = item.getItemId(); 
+ 
+        </span><span class="s0">if </span><span class="s1">(id == R.id.createRecordItem) { 
+            CreateRecordFragment createRecordFragment = </span><span class="s0">new </span><span class="s1">CreateRecordFragment(); 
+ 
+            fragmentTransaction.replace(R.id.frag_container, createRecordFragment); 
+            fragmentTransaction.commit(); 
+ 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Create Record&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+        } </span><span class="s0">else if </span><span class="s1">(id == R.id.retrieveRecordItem) { 
+            RetrieveRecordFragment retrieveRecordFragment = </span><span class="s0">new </span><span class="s1">RetrieveRecordFragment(); 
+ 
+            fragmentTransaction.replace(R.id.frag_container, retrieveRecordFragment); 
+            fragmentTransaction.commit(); 
+ 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Retrieve Record&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+        } </span><span class="s0">else if </span><span class="s1">(id == R.id.updateRecordItem) { 
+            UpdateRecordFragment updateRecordFragment = </span><span class="s0">new </span><span class="s1">UpdateRecordFragment(); 
+ 
+            fragmentTransaction.replace(R.id.frag_container, updateRecordFragment); 
+            fragmentTransaction.commit(); 
+ 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Update Record&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+        } </span><span class="s0">else if </span><span class="s1">(id == R.id.deleteRecordItem) { 
+            DeleteRecordFragment deleteRecordFragment = </span><span class="s0">new </span><span class="s1">DeleteRecordFragment(); 
+ 
+            fragmentTransaction.replace(R.id.frag_container, deleteRecordFragment); 
+            fragmentTransaction.commit(); 
+ 
+            Toast.makeText(getApplicationContext(), </span><span class="s2">&quot;Delete Record&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+        } 
+ 
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout); 
+        drawer.closeDrawer(GravityCompat.START); 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">insertStudent() { 
+</span><span class="s3">//        createStudent = (Button) findViewById(R.id.);</span><span class="s1"> 
+    } 
+} 
+</span></pre>
+</body>
+</html>

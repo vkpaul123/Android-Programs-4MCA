@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vkpaul123.firstproject.MainActivity2">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Select Items"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+        <CheckBox
+            android:id="@+id/checkBoxApple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView6"
+            android:text="Apple" />
+
+        <CheckBox
+            android:id="@+id/checkBoxBanana"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/checkBoxApple"
+            android:text="Banana" />
+
+        <CheckBox
+            android:id="@+id/checkBoxCarrot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/checkBoxBanana"
+            android:text="Carrot" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMango"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/checkBoxCarrot"
+            android:text="Mango" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewTotalShow"
+            android:layout_alignBottom="@+id/textViewTotalShow"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Total"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            tools:layout_editor_absoluteX="539dp"
+            tools:layout_editor_absoluteY="177dp" />
+
+        <TextView
+            android:id="@+id/textViewTotalShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="42dp"
+            android:text="Rs. 0.00/-"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+
+        <Button
+            android:id="@+id/buttonCalc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkBoxMango"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="82dp"
+            android:text="Calculate" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

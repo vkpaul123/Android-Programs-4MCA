@@ -1,0 +1,274 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(0,0,255); }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(128,128,128); font-style: italic; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.notificationstest; 
+ 
+</span><span class="s0">import </span><span class="s1">android.app.Notification; 
+</span><span class="s0">import </span><span class="s1">android.app.NotificationChannel; 
+</span><span class="s0">import </span><span class="s1">android.app.NotificationManager; 
+</span><span class="s0">import </span><span class="s1">android.app.PendingIntent; 
+</span><span class="s0">import </span><span class="s1">android.app.RemoteInput; 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.graphics.Bitmap; 
+</span><span class="s0">import </span><span class="s1">android.graphics.BitmapFactory; 
+</span><span class="s0">import </span><span class="s1">android.graphics.Color; 
+</span><span class="s0">import </span><span class="s1">android.os.Build; 
+</span><span class="s0">import </span><span class="s1">android.support.annotation.RequiresApi; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.NotificationCompat; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import </span><span class="s1">java.util.Random; 
+ 
+@RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH) 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    Button b1, b2, b3, b4; 
+ 
+    </span><span class="s0">private  static final int </span><span class="s1">NOTIFICATION_ID = </span><span class="s2">1</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String NOTIFICATION_CHANNEL_ID = </span><span class="s3">&quot;my_notifications_channel&quot;</span><span class="s1">; 
+    </span><span class="s0">private static final </span><span class="s1">String KEY_TEXT_REPLY = </span><span class="s3">&quot;key_text_reply&quot;</span><span class="s1">; 
+ 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        b1 = (Button) findViewById(R.id.simpleButton); 
+        b2 = (Button) findViewById(R.id.withIconButton); 
+        b3 = (Button) findViewById(R.id.withImageButton); 
+        b4 = (Button) findViewById(R.id.withReplyButton); 
+ 
+        clearExistingNotifications(); 
+ 
+        b1.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                notificationsSimple(); 
+            } 
+        }); 
+ 
+        b2.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                notificationWithIcon(); 
+            } 
+        }); 
+ 
+        b3.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                notificationWithImage(); 
+            } 
+        }); 
+        b4.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @RequiresApi(api = Build.VERSION_CODES.N) 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                notificationWithReply(); 
+            } 
+        }); 
+    } 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onNewIntent(Intent intent) { 
+        </span><span class="s0">super</span><span class="s1">.onNewIntent(intent); 
+        processInlineReply(intent); 
+ 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">clearExistingNotifications() { 
+        </span><span class="s0">int </span><span class="s1">notificationId = getIntent().getIntExtra(</span><span class="s3">&quot;notificationId&quot;</span><span class="s1">, </span><span class="s2">0</span><span class="s1">); 
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); 
+        manager.cancel(notificationId); 
+    } 
+ 
+    </span><span class="s0">private void </span><span class="s1">processInlineReply(Intent intent) { 
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(intent); 
+ 
+        </span><span class="s0">if </span><span class="s1">(remoteInput != </span><span class="s0">null</span><span class="s1">) { 
+            String reply = remoteInput.getCharSequence( 
+                    KEY_TEXT_REPLY).toString(); 
+ 
+            </span><span class="s4">//Set the inline reply text in the TextView</span><span class="s1"> 
+            Toast.makeText(getApplicationContext(), reply, Toast.LENGTH_SHORT).show(); 
+ 
+ 
+            </span><span class="s4">//Update the notification to show that the reply was received.</span><span class="s1"> 
+            Notification.Builder repliedNotification = 
+                    </span><span class="s0">new </span><span class="s1">Notification.Builder(</span><span class="s0">this</span><span class="s1">) 
+                            .setSmallIcon( 
+                                    android.R.drawable.stat_notify_chat) 
+                            .setContentText(</span><span class="s3">&quot;Inline Reply received&quot;</span><span class="s1">); 
+ 
+            NotificationManager notificationManager = 
+                    (NotificationManager) 
+                            getSystemService(Context.NOTIFICATION_SERVICE); 
+            notificationManager.notify(NOTIFICATION_ID, 
+                    repliedNotification.build()); 
+ 
+        } 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">notificationsSimple() { 
+        Toast.makeText(getApplicationContext(), </span><span class="s3">&quot;Simple Notification&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+ 
+ 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); 
+ 
+        </span><span class="s0">if</span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) { 
+            NotificationChannel notificationChannel = </span><span class="s0">new </span><span class="s1">NotificationChannel(NOTIFICATION_CHANNEL_ID, </span><span class="s3">&quot;My Notifications&quot;</span><span class="s1">, NotificationManager.IMPORTANCE_DEFAULT); 
+            notificationManager.createNotificationChannel(notificationChannel); 
+        } 
+ 
+        NotificationCompat.Builder builder = </span><span class="s0">new </span><span class="s1">NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID) 
+                .setSmallIcon(R.mipmap.ic_launcher) 
+                .setContentTitle(</span><span class="s3">&quot;Content Title&quot;</span><span class="s1">) 
+                .setChannelId(NOTIFICATION_CHANNEL_ID) 
+                .setContentText(</span><span class="s3">&quot;Hi&quot;</span><span class="s1">); 
+ 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this</span><span class="s1">, MainActivity.</span><span class="s0">class</span><span class="s1">); 
+        PendingIntent pendingIntent = PendingIntent.getActivity(</span><span class="s0">this</span><span class="s1">, </span><span class="s2">0</span><span class="s1">, intent, PendingIntent.FLAG_CANCEL_CURRENT); 
+ 
+        builder.setContentIntent(pendingIntent); 
+ 
+        Notification notification = builder.build(); 
+ 
+        notificationManager.notify(NOTIFICATION_ID, builder.build()); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">notificationWithIcon() { 
+        Toast.makeText(getApplicationContext(), </span><span class="s3">&quot;Icon Notification&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+ 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); 
+ 
+        </span><span class="s0">if</span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) { 
+            NotificationChannel notificationChannel = </span><span class="s0">new </span><span class="s1">NotificationChannel(NOTIFICATION_CHANNEL_ID, </span><span class="s3">&quot;My Notifications&quot;</span><span class="s1">, NotificationManager.IMPORTANCE_DEFAULT); 
+            notificationManager.createNotificationChannel(notificationChannel); 
+        } 
+ 
+        NotificationCompat.Builder builder = </span><span class="s0">new </span><span class="s1">NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID) 
+                .setSmallIcon(R.mipmap.ic_launcher) 
+                .setContentTitle(</span><span class="s3">&quot;Content Title - With Icon&quot;</span><span class="s1">) 
+                .setChannelId(NOTIFICATION_CHANNEL_ID) 
+                .setContentText(</span><span class="s3">&quot;Hi. There is an Icon.&quot;</span><span class="s1">) 
+                .setSmallIcon(R.drawable.ic_my_noti_icon); 
+ 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this</span><span class="s1">, MainActivity.</span><span class="s0">class</span><span class="s1">); 
+        PendingIntent pendingIntent = PendingIntent.getActivity(</span><span class="s0">this</span><span class="s1">, </span><span class="s2">0</span><span class="s1">, intent, PendingIntent.FLAG_CANCEL_CURRENT); 
+ 
+        builder.setContentIntent(pendingIntent); 
+ 
+        Notification notification = builder.build(); 
+ 
+        notificationManager.notify(NOTIFICATION_ID, builder.build()); 
+    } 
+ 
+    </span><span class="s0">public void </span><span class="s1">notificationWithImage() { 
+        Toast.makeText(getApplicationContext(), </span><span class="s3">&quot;Picture Notification&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+ 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); 
+ 
+        Bitmap myImage = BitmapFactory.decodeResource(getResources(), R.drawable.gripen); 
+ 
+        </span><span class="s0">if</span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) { 
+            NotificationChannel notificationChannel = </span><span class="s0">new </span><span class="s1">NotificationChannel(NOTIFICATION_CHANNEL_ID, </span><span class="s3">&quot;My Notifications&quot;</span><span class="s1">, NotificationManager.IMPORTANCE_DEFAULT); 
+            notificationManager.createNotificationChannel(notificationChannel); 
+        } 
+ 
+        NotificationCompat.Builder builder = </span><span class="s0">new </span><span class="s1">NotificationCompat.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID) 
+                .setSmallIcon(R.mipmap.ic_launcher) 
+                .setContentTitle(</span><span class="s3">&quot;Content Title - With Picture&quot;</span><span class="s1">) 
+                .setChannelId(NOTIFICATION_CHANNEL_ID) 
+                .setContentText(</span><span class="s3">&quot;Hi. There is a Picture.&quot;</span><span class="s1">) 
+                .setSmallIcon(R.drawable.ic_my_noti_icon) 
+                .setStyle(</span><span class="s0">new </span><span class="s1">NotificationCompat.BigPictureStyle() 
+                    .bigPicture(myImage)); 
+ 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this</span><span class="s1">, MainActivity.</span><span class="s0">class</span><span class="s1">); 
+        PendingIntent pendingIntent = PendingIntent.getActivity(</span><span class="s0">this</span><span class="s1">, </span><span class="s2">0</span><span class="s1">, intent, PendingIntent.FLAG_CANCEL_CURRENT); 
+ 
+        builder.setContentIntent(pendingIntent); 
+ 
+        Notification notification = builder.build(); 
+ 
+        notificationManager.notify(NOTIFICATION_ID, builder.build()); 
+    } 
+ 
+    @RequiresApi(api = Build.VERSION_CODES.N) 
+    </span><span class="s0">public void </span><span class="s1">notificationWithReply() { 
+        Toast.makeText(getApplicationContext(), </span><span class="s3">&quot;With Reply Notification&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+ 
+        </span><span class="s4">//Create notification builder</span><span class="s1"> 
+        Notification.Builder builder = </span><span class="s0">new </span><span class="s1">Notification.Builder(</span><span class="s0">this</span><span class="s1">) 
+                .setSmallIcon(android.R.drawable.stat_notify_chat) 
+                .setContentTitle(</span><span class="s3">&quot;Inline Reply Notification&quot;</span><span class="s1">); 
+ 
+        String replyLabel = </span><span class="s3">&quot;Enter your reply here&quot;</span><span class="s1">; 
+ 
+        </span><span class="s4">//Initialise RemoteInput</span><span class="s1"> 
+        RemoteInput remoteInput = </span><span class="s0">new </span><span class="s1">RemoteInput.Builder(KEY_TEXT_REPLY) 
+                .setLabel(replyLabel) 
+                .build(); 
+ 
+ 
+        </span><span class="s0">int </span><span class="s1">randomRequestCode = </span><span class="s0">new </span><span class="s1">Random().nextInt(</span><span class="s2">54325</span><span class="s1">); 
+ 
+        </span><span class="s4">//PendingIntent that restarts the current activity instance.</span><span class="s1"> 
+        Intent resultIntent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this</span><span class="s1">, MainActivity.</span><span class="s0">class</span><span class="s1">); 
+        </span><span class="s4">//Set a unique request code for this pending intent</span><span class="s1"> 
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(</span><span class="s0">this</span><span class="s1">, randomRequestCode, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT); 
+ 
+ 
+        </span><span class="s4">//Notification Action with RemoteInput instance added.</span><span class="s1"> 
+        Notification.Action replyAction = </span><span class="s0">new </span><span class="s1">Notification.Action.Builder( 
+                android.R.drawable.sym_action_chat, </span><span class="s3">&quot;REPLY&quot;</span><span class="s1">, resultPendingIntent) 
+                .addRemoteInput(remoteInput) 
+                .setAllowGeneratedReplies(</span><span class="s0">true</span><span class="s1">) 
+                .build(); 
+ 
+        </span><span class="s4">//Notification.Action instance added to Notification Builder.</span><span class="s1"> 
+        builder.addAction(replyAction); 
+ 
+        Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this</span><span class="s1">, MainActivity.</span><span class="s0">class</span><span class="s1">); 
+        intent.putExtra(</span><span class="s3">&quot;notificationId&quot;</span><span class="s1">, NOTIFICATION_ID); 
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); 
+        PendingIntent dismissIntent = PendingIntent.getActivity(getBaseContext(), </span><span class="s2">0</span><span class="s1">, intent, PendingIntent.FLAG_CANCEL_CURRENT); 
+ 
+ 
+        builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, </span><span class="s3">&quot;DISMISS&quot;</span><span class="s1">, dismissIntent); 
+ 
+        </span><span class="s4">//Create Notification.</span><span class="s1"> 
+        NotificationManager notificationManager = 
+                (NotificationManager) 
+                        getSystemService(Context.NOTIFICATION_SERVICE); 
+ 
+        notificationManager.notify(NOTIFICATION_ID, 
+                builder.build()); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

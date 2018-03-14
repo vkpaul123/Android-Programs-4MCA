@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.implicitintents; 
+ 
+</span><span class="s0">import </span><span class="s1">android.Manifest; 
+</span><span class="s0">import </span><span class="s1">android.content.Intent; 
+</span><span class="s0">import </span><span class="s1">android.content.pm.PackageManager; 
+</span><span class="s0">import </span><span class="s1">android.net.Uri; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.ActivityCompat; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import </span><span class="s1">java.net.URI; 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    Button b1, b2, b3, b4; 
+    EditText to, subject, text, phno; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        addListenerOnB1(); 
+        addListenerOnB2(); 
+        addListenerOnB3(); 
+        addListenerOnB4(); 
+    } 
+ 
+    </span><span class="s2">//  Google Maps</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">addListenerOnB1() { 
+        b1 = (Button) findViewById(R.id.button1); 
+ 
+        b1.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(Intent.ACTION_VIEW); 
+                i.setData(Uri.parse(</span><span class="s3">&quot;geo: 12.972442, 77.580643&quot;</span><span class="s1">)); 
+ 
+                Intent chooser = Intent.createChooser(i, </span><span class="s3">&quot;Launch Maps&quot;</span><span class="s1">); 
+                startActivity(chooser); 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s2">//  Call</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">addListenerOnB2() { 
+        b2 = (Button) findViewById(R.id.button2); 
+ 
+        b2.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(Intent.ACTION_DIAL); 
+ 
+                phno = (EditText) findViewById(R.id.editPHno); 
+ 
+                String phNoText = phno.getText().toString(); 
+ 
+                </span><span class="s0">if</span><span class="s1">(phNoText.trim().isEmpty()) 
+                    i.setData(Uri.parse(</span><span class="s3">&quot;tel:8296765476&quot;</span><span class="s1">)); 
+                </span><span class="s0">else</span><span class="s1"> 
+                    i.setData(Uri.parse(</span><span class="s3">&quot;tel:&quot; </span><span class="s1">+ phNoText)); 
+ 
+                </span><span class="s0">if </span><span class="s1">(ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) 
+                { 
+                    Toast.makeText(getApplicationContext(),</span><span class="s3">&quot;Please grant the permission to call&quot;</span><span class="s1">, Toast.LENGTH_SHORT).show(); 
+                    </span><span class="s0">return</span><span class="s1">; 
+                } 
+                </span><span class="s0">else </span><span class="s1">{ 
+                    startActivity(i); 
+                } 
+            } 
+ 
+        }); 
+    } 
+ 
+    </span><span class="s2">//  Send Email</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">addListenerOnB3() { 
+        b3 = (Button) findViewById(R.id.button3); 
+ 
+        b3.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                to = (EditText) findViewById(R.id.emailTo); 
+                subject = (EditText) findViewById(R.id.editSubject); 
+                text = (EditText) findViewById(R.id.editEmailText); 
+ 
+                String []sendTo = {to.getText().toString()}; 
+                String subjectText = subject.getText().toString(); 
+                String messageText = text.getText().toString(); 
+ 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(Intent.ACTION_SEND); 
+ 
+                i.putExtra(Intent.EXTRA_EMAIL, sendTo); 
+                i.putExtra(Intent.EXTRA_SUBJECT, subjectText); 
+                i.putExtra(Intent.EXTRA_TEXT, messageText); 
+                i.setType(</span><span class="s3">&quot;message/rfc822&quot;</span><span class="s1">); 
+ 
+                Intent chooser = Intent.createChooser(i, </span><span class="s3">&quot;Send EMail&quot;</span><span class="s1">); 
+                startActivity(chooser); 
+            } 
+        }); 
+    } 
+ 
+    </span><span class="s2">//  Browser</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">addListenerOnB4() { 
+        b4 = (Button) findViewById(R.id.button4); 
+ 
+        b4.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                String url = </span><span class="s3">&quot;https://medium.com/&quot;</span><span class="s1">; 
+ 
+                Intent i = </span><span class="s0">new </span><span class="s1">Intent(Intent.ACTION_VIEW); 
+                i.setData(Uri.parse(url)); 
+ 
+                startActivity(i); 
+            } 
+        }); 
+    } 
+} 
+</span></pre>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>FirstActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+FirstActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">com.example.vkpaul123.firstproject; 
+ 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.util.Log; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+ 
+</span><span class="s0">public class </span><span class="s1">FirstActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    </span><span class="s2">//  onCreate()</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_first); 
+ 
+        Log.i(</span><span class="s3">&quot;activityOnCreateInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;onCreate() Executed&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s2">//  onStart()</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onStart() { 
+        </span><span class="s0">super</span><span class="s1">.onStart(); 
+ 
+        Log.i(</span><span class="s3">&quot;activityOnStartInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;onStart() Executed&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s2">//  onRestart()</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onRestart() { 
+        </span><span class="s0">super</span><span class="s1">.onRestart(); 
+ 
+        Log.i(</span><span class="s3">&quot;activityOnRestartInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;onRestart() Executed&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s2">//  onResume</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onResume() { 
+        </span><span class="s0">super</span><span class="s1">.onResume(); 
+ 
+        Log.i(</span><span class="s3">&quot;activityOnResumeInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;onResume() Executed&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s2">//  onPause</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onPause() { 
+        </span><span class="s0">super</span><span class="s1">.onPause(); 
+ 
+        Log.i(</span><span class="s3">&quot;activityOnPauseInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;onPause() Executed&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s2">//  onStop</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onStop() { 
+        </span><span class="s0">super</span><span class="s1">.onStop(); 
+ 
+        Log.i(</span><span class="s3">&quot;activityOnStopInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;onStop() Executed&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s2">//  onDestroy</span><span class="s1"> 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onDestroy() { 
+        </span><span class="s0">super</span><span class="s1">.onDestroy(); 
+ 
+        Log.i(</span><span class="s3">&quot;activityOnDestroyInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;onDestroy() Executed&quot;</span><span class="s1">); 
+    } 
+ 
+    </span><span class="s2">//  Button Click</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">buttonClickLog(View view) { 
+        Log.i(</span><span class="s3">&quot;buttonClickInfo&quot;</span><span class="s1">, </span><span class="s3">&quot;Button was clicked.&quot;</span><span class="s1">); 
+    } 
+} 
+</span></pre>
+</body>
+</html>
